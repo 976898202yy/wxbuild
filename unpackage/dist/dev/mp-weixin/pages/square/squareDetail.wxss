@@ -1,0 +1,30 @@
+.detail {
+  padding: 10px;
+}
+.detail .img-top {
+  display: flex;
+  justify-content: space-between;
+}
+.detail .img-top image {
+  width: 115px;
+  height: 115px;
+}
+.detail .form {
+  margin: 14px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #dad2d2fa;
+}
+.detail .margin-l {
+  margin-left: 20px;
+}
+.detail .u-textarea--disabled {
+  background-color: #FFF !important;
+  padding: 10px 0 !important;
+}
+.detail .u-button--primary {
+  width: 350rpx !important;
+  height: 50px !important;
+  background-color: #211C22 !important;
+}
+

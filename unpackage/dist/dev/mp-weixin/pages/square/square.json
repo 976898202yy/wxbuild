@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "活动",
+  "usingComponents": {
+    "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs"
+  }
+}

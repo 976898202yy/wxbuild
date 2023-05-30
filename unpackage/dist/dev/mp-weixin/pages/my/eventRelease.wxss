@@ -1,0 +1,15 @@
+.container {
+  padding: 10px;
+}
+.container .margin-l {
+  margin-left: 20px;
+}
+.container .u-button--primary {
+  width: 350rpx !important;
+  height: 50px !important;
+  background-color: #211C22 !important;
+}
+.container .u-form-item__body {
+  padding: 16px 0 !important;
+}
+
