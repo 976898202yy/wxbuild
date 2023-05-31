@@ -21,7 +21,9 @@
 		},
 		methods:{
 			click(){
-				console.log(111);
+				uni.switchTab({
+					url:"../index/index"
+				})
 			}
 		}
 	}

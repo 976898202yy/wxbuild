@@ -40,17 +40,17 @@
 		methods:{
 			toEdit(){
 				uni.navigateTo({
-					url: '/pages/my/edit'
+					url: '/pagesMy/edit'
 				})
 			},
 			toAudit(){
 				uni.navigateTo({
-					url: '/pages/my/audit'
+					url: '/pagesMy/audit'
 				})
 			},
 			toEvent(){
 				uni.navigateTo({
-					url: '/pages/my/eventRelease'
+					url: '/pagesMy/eventRelease'
 				})
 			}
 		}

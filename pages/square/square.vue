@@ -57,9 +57,12 @@
 			
 		},
 		methods:{
+			tabChange(){
+				
+			},
 			toDetail(){
 				uni.navigateTo({
-					url: '/pages/square/squareDetail'
+					url: '/pagesSquare/squareDetail'
 				})
 			}
 		}

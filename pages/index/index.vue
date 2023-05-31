@@ -13,7 +13,7 @@
 		</view>
 		<view class="center-btn">
 			<view class="btn btn-left" @click="toSquare()">俱乐部活动</view>
-			<view class="btn btn-right">交友群</view>
+			<view class="btn btn-right" @click="toGroup()">交友群</view>
 		</view>
 		<view style="position: relative;">
 			<view class="service" @click="openModal()">客服</view>
@@ -151,7 +151,7 @@
 			},
 			toDetail(){
 				uni.navigateTo({
-					url: '/pages/index/personnelDetails'
+					url: '/pagesIndex/personnelDetails'
 				})
 			},
 			openModal(){
@@ -160,6 +160,11 @@
 			toSquare(){
 				uni.switchTab({
 					url: '/pages/square/square'
+				})
+			},
+			toGroup(){
+				uni.navigateTo({
+					url: '/pagesIndex/friendGroup'
 				})
 			}
 		}

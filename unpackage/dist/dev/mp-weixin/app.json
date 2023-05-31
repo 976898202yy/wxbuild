@@ -1,17 +1,35 @@
 {
   "pages": [
-    "pages/my/my",
-    "pages/index/index",
     "pages/login/login",
+    "pages/index/index",
     "pages/square/square",
-    "pages/index/personnelDetails",
-    "pages/square/squareDetail",
-    "pages/square/form",
-    "pages/my/edit",
-    "pages/my/audit",
-    "pages/my/eventRelease"
+    "pages/my/my"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "pagesIndex",
+      "pages": [
+        "friendGroup",
+        "personnelDetails"
+      ]
+    },
+    {
+      "root": "pagesSquare",
+      "pages": [
+        "form",
+        "squareDetail"
+      ]
+    },
+    {
+      "root": "pagesMy",
+      "pages": [
+        "audit",
+        "auditDetails",
+        "edit",
+        "eventRelease"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

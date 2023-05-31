@@ -4,9 +4,10 @@
 	// },
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/my/my",
+			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "标题",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -16,55 +17,93 @@
 			}
 		},
 		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "标题",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/square/square",
 			"style": {
 				"navigationBarTitleText": "活动"
 			}
 		},
 		{
-			"path": "pages/index/personnelDetails",
+			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "信息"
-			}
-		},
-		{
-			"path": "pages/square/squareDetail",
-			"style": {
-				"navigationBarTitleText": "活动"
-			}
-		},
-		{
-			"path": "pages/square/form",
-			"style": {
-				"navigationBarTitleText": "资料填写"
-			}
-		},
-		{
-			"path": "pages/my/edit",
-			"style": {
-				"navigationBarTitleText": "我的信息"
-			}
-		},
-		{
-			"path": "pages/my/audit",
-			"style": {
-				"navigationBarTitleText": "基本信息审核"
-			}
-		},
-		{
-			"path": "pages/my/eventRelease",
-			"style": {
-				"navigationBarTitleText": "活动发布"
+				"navigationBarTitleText": "我的"
 			}
 		}
 	],
+	"subPackages": [
+	{
+		"root": "pagesIndex",
+		"pages": [{
+			"path": "friendGroup",
+			"style": {
+				"navigationBarTitleText": "交友群",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "personnelDetails",
+			"style": {
+				"navigationBarTitleText": "信息",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		}]
+	},{
+		"root": "pagesSquare",
+		"pages": [{
+			"path": "form",
+			"style": {
+				"navigationBarTitleText": "资料填写",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "squareDetail",
+			"style": {
+				"navigationBarTitleText": "活动",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		}]
+	},{
+		"root": "pagesMy",
+		"pages": [{
+			"path": "audit",
+			"style": {
+				"navigationBarTitleText": "基本信息审核",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "auditDetails",
+			"style": {
+				"navigationBarTitleText": "信息",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "edit",
+			"style": {
+				"navigationBarTitleText": "我的信息",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "eventRelease",
+			"style": {
+				"navigationBarTitleText": "活动发布",
+				"navigationBarBackgroundColor": "#FFF",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
