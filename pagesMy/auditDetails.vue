@@ -138,6 +138,13 @@
 <style lang="less">
 	.container{
 		padding: 20px 10px;
+		picker-view {
+			height: 190px !important;
+		}
+		.u-icon__icon{
+			font-size: 13px !important;
+			line-height: 13px !important;
+		}
 	}
 	.margin-l{
 		margin-left: 20px;

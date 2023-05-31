@@ -1,6 +1,13 @@
 .container {
   padding: 20px 10px;
 }
+.container .u-icon__icon {
+  font-size: 13px !important;
+  line-height: 13px !important;
+}
+.container picker-view {
+  height: 190px !important;
+}
 .margin-l {
   margin-left: 20px;
 }

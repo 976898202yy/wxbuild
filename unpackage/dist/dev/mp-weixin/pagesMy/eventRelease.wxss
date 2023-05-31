@@ -12,4 +12,11 @@
 .container .u-form-item__body {
   padding: 16px 0 !important;
 }
+.container .u-icon__icon {
+  font-size: 13px !important;
+  line-height: 13px !important;
+}
+.container picker-view {
+  height: 190px !important;
+}
 

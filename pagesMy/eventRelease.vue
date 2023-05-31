@@ -100,5 +100,12 @@
 		.u-form-item__body{
 			padding: 16px 0 !important;
 		}
+		.u-icon__icon{
+			font-size: 13px !important;
+			line-height: 13px !important;
+		}
+		picker-view {
+			height: 190px !important;
+		}
 	}
 </style>

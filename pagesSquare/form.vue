@@ -4,6 +4,7 @@
 			<u-upload
 				width="210"
 				height="210"
+				deletable
 				:fileList="fileList"
 				@afterRead="afterRead"
 				@delete="deletePic"
@@ -137,6 +138,13 @@
 <style lang="less">
 	.container{
 		padding: 20px 10px;
+		.u-icon__icon{
+			font-size: 13px !important;
+			line-height: 13px !important;
+		}
+		picker-view {
+			height: 190px !important;
+		}
 	}
 	.margin-l{
 		margin-left: 20px;
