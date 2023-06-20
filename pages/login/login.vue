@@ -7,7 +7,7 @@
 				<view>请在稍后的提示框中点击“允许”</view>
 			</view>
 			<image style="width:100%;text-align: center;" src="../../static/authorized.png" width="80px" height="80px"></image>
-			<button class="login-btn" @tap="click()">我知道了</button>
+			<button class="login-btn" open-type="getUserInfo" @tap="wxLogin()">我知道了</button>
 		</view>
 	</view>
 </template>
@@ -20,10 +20,34 @@
 			}
 		},
 		methods:{
-			click(){
-				uni.switchTab({
-					url:"../index/index"
-				})
+			wxLogin(){
+				uni.getUserProfile({
+					desc: 'weixin',
+					success: (obj) => {
+						console.log(obj);
+						uni.setStorageSync('encryptedData', obj.encryptedData);
+						uni.setStorageSync('userInfo', obj.userInfo);
+						uni.login({
+							provider: 'weixin',
+							success: (res) => {
+								let code = res.code;
+								if (res.errMsg == 'login:ok') {
+									console.log(res);
+									uni.switchTab({
+										url:"../index/index"
+									})
+								}
+							},
+						});
+					},
+					fail: () => {
+						uni.showToast({
+							title: '授权已取消',
+							icon: 'error',
+							mask: true,
+						});
+					}
+				});
 			}
 		}
 	}

@@ -2,7 +2,8 @@
 	<view class="content">
 		<view>
 			<u-swiper
-				:list="list3"
+				:list="bannerList"
+				keyName="img"
 				indicator
 				previousMargin="20"
 				nextMargin="20"
@@ -101,11 +102,13 @@
 	export default {
 		data() {
 			return {
-				list3: [
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png'
-				],
+				bannerList: [{
+					img: require("../../static/swiper1.jpg")
+				},{
+					img: require("../../static/swiper2.jpg")
+				},{
+					img: require("../../static/swiper3.jpg")
+				}],
 				tabs:[
 					{
 						name: '男生',

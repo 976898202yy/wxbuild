@@ -6,6 +6,10 @@ import Vue from 'vue'
 // main.js，注意要在use方法之后执行
 import uView from '@/uni_modules/uview-ui'
 Vue.use(uView)
+
+import url from "./config.js"
+Vue.prototype.$url = url;
+
 // 如此配置即可
 uni.$u.config.unit = 'rpx'
 

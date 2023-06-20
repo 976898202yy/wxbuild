@@ -91,6 +91,8 @@
 			v-model="value1"
 			mode="date"
 			closeOnClickOverlay
+			minDate="Number(new Date('1970-01-01'))"
+			:maxDate="new Date().getTime()"
 			@cancel="showTime = false"
 			@close="showTime = false"
 		></u-datetime-picker>

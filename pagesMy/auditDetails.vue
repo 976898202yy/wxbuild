@@ -91,6 +91,8 @@
 			:show="showTime"
 			v-model="value1"
 			mode="date"
+			minDate="Number(new Date('1970-01-01'))"
+			:maxDate="new Date().getTime()"
 			closeOnClickOverlay
 			@cancel="showTime = false"
 			@close="showTime = false"

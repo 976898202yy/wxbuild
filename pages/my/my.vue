@@ -2,8 +2,8 @@
 	<view class="container">
 		<view class="my-top">
 			<view class="left">
-				<image src="../../static/logo.png" mode=""></image>
-				<view>微信号</view>
+				<image :src="userInfo.avatarUrl" mode=""></image>
+				<view>{{userInfo.nickName}}</view>
 			</view>
 			<view style="margin-right: 20px;">季度会员</view>
 		</view>
@@ -32,10 +32,15 @@
 			return{
 				show: false,
 				title: '添加客服微信',
+				userInfo: {}
 			}
 		},
 		onLoad() {
 			
+		},
+		onShow() {
+			this.userInfo = uni.getStorageSync('userInfo');
+			console.log(this.userInfo);
 		},
 		methods:{
 			toEdit(){
@@ -58,50 +63,5 @@
 </script>
 
 <style lang="less">
-	.container{
-		padding: 20px;
-		.my-top{
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			.left{
-				display: flex;
-				align-items: center;
-			}
-			image{
-				width: 80px;
-				height: 80px;
-				border-radius: 50%;
-				margin-right: 20px;
-			}
-		}
-		.my-list{
-			margin: 40px auto;
-			border: 1px solid #999;
-			position: relative;
-			.my-list-item{
-				height: 50px;
-				border-bottom: 1px solid #999;
-				line-height: 50px;
-				padding-left: 16px;
-				font-size: 28rpx;
-			}
-			.my-list-item:last-child{
-				border-bottom: none;
-			}
-			.list-top{
-				border: 1px solid #999;
-				height: 70px;
-				line-height: 70px;
-				padding-left: 16px;
-				font-size: 28rpx;
-				position: absolute;
-				background-color: #FFF;
-				position: absolute;
-				top: -34px;
-				left: 16px;
-				right: 16px	;
-			}
-		}
-	}
+	@import url("my.less");
 </style>
