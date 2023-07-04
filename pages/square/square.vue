@@ -2,31 +2,59 @@
 	<view class="container">
 		<u-tabs :list="tabs" :current="current" :scrollable="false" lineColor="#ffffff" :itemStyle="{display:'flex',justifyContent:'start'}" @change="tabChange"></u-tabs>
 		<view v-if="current == 0">
-			<scroll-view>
+			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 95vh">
 				<view class="box">
-					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail()">
-						<image :src="item.img" mode=""></image>
+					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
+						<image :src="item.activityImagesList[0]" mode=""></image>
 						<view style="margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
 							<view>{{tabs[0].name}}</view>
-							<view>{{item.content}}</view>
+							<view>{{item.beginTime + item.name}}</view>
 							<view>
 								<text>报名费</text>
-								<text>{{item.money}}</text>
-								<text>已报名</text>
-								<text>{{item.num}}</text>
+								<text>{{item.price}}元</text>
+								<text style="margin-left: 8px;">已报名</text>
+								<text>{{item.registrationsNum}}人</text>
+							</view>
+						</view>
+					</view>
+				</view>
+				<u-loadmore v-if="squareList.length > 0" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+					nomore-text="没有更多了" line />
+			</scroll-view>
+		</view>
+		<view v-if="current == 1">
+			<scroll-view>
+				<view class="box">
+					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
+						<image :src="item.activityImagesList[0]" mode=""></image>
+						<view style="margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
+							<view>{{tabs[1].name}}</view>
+							<view>{{item.beginTime + item.name}}</view>
+							<view>
+								<text>报名费</text>
+								<text>{{item.price}}元</text>
+								<text style="margin-left: 8px;">已报名</text>
+								<text>{{item.registrationsNum}}人</text>
 							</view>
 						</view>
 					</view>
 				</view>
 			</scroll-view>
 		</view>
+		<view v-if="squareList.length == 0" class="no-data">
+			<u-empty mode="data" icon="http://cdn.uviewui.com/uview/empty/data.png"></u-empty>
+		</view>
 	</view>
 </template>
 
 <script>
+	import { getSquareList, getInfoExamine } from '@/api/square/form.js'
 	export default{
 		data(){
 			return{
+				page: 1,
+				size: 5,
+				allPages: '',
 				tabs:[
 					{
 						name: '进行中',
@@ -35,35 +63,73 @@
 					}
 				],
 				current: 0,
-				squareList:[{
-					img: 'https://cdn.uviewui.com/uview/goods/1.jpg',
-					content: '5.3日晚上xx活动',
-					money: '300',
-					num: '20'
-				},{
-					img: 'https://cdn.uviewui.com/uview/goods/1.jpg',
-					content: '5.3日晚上xx活动',
-					money: '300',
-					num: '20'
-				},{
-					img: 'https://cdn.uviewui.com/uview/goods/1.jpg',
-					content: '5.3日晚上xx活动',
-					money: '300',
-					num: '20'
-				}]
+				squareList:[],
+				status: 'loadmore',
+				examine: ''
 			}
 		},
-		onLoad() {
-			
+		onShow(){
+			this.squareList = [];
+			this.loadData();
+			this.loadExamine();
 		},
 		methods:{
-			tabChange(){
+			tabChange(e){
+				this.current = e.index;
+				this.page = 1;
+				this.squareList = [];
+				this.loadData();
+			},
+			toDetail(id){
+				if(this.examine == 1){
+					uni.navigateTo({
+						url: '/pagesSquare/squareDetail?id=' + id
+					})
+				}else{
+					uni.navigateTo({
+						url: '/pagesSquare/form'
+					})
+				}
 				
 			},
-			toDetail(){
-				uni.navigateTo({
-					url: '/pagesSquare/squareDetail'
+			loadData(){
+				let data = {
+					activityType: this.current + 1,
+					pageNum: this.page,
+					pageSize: this.size
+				}
+				getSquareList(data).then(res => {
+					if(res.rows.length > 0){
+						for (let i = 0; i < res.rows.length; i++) {
+							this.squareList.push(res.rows[i])
+						}
+						if(this.squareList.length > 0){
+							this.allPages = res.totalNum;
+						}else {
+							this.status = 'noMore'
+						}
+					}else{
+						this.squareList = []
+					}
 				})
+			},
+			loadExamine(){
+				getInfoExamine().then(res => {
+					this.examine = res.msg;
+				})
+			},
+			//   上拉加载	
+			scrolltolower(){
+				if (this.page == this.allPages) {
+					this.status = 'noMore'
+					return
+				} else{
+					this.page = this.page + 1;
+					this.status = 'loading';
+					setTimeout(() => {
+						this.loadData();
+					}, 1000)
+				}
 			}
 		}
 	}

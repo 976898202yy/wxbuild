@@ -11,4 +11,14 @@
 .container .list-box:last-child {
   border-bottom: none;
 }
+.container .no-data {
+  margin-top: 30%;
+}
+.container .no-data image {
+  width: 150px !important;
+  height: 150px !important;
+}
+.container .no-data .u-empty__text {
+  font-size: 28rpx !important;
+}
 

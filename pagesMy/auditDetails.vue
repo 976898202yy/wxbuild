@@ -1,151 +1,180 @@
 <template>
 	<view class="container">
-		<view>
-			<u-upload
-				width="210"
-				height="210"
-				:fileList="fileList"
-				@afterRead="afterRead"
-				@delete="deletePic"
-				name="1"
-				:maxCount="6"
-				:previewFullImage="true"
-				uploadText="广场头像"
-			>
-			</u-upload>
+		<view class="img-1">
+			<view class="img-item" v-for="(item, i) in form.squareImagesList">
+				<image :src="item" mode=""></image>
+			</view>
 		</view>
 		<u-form labelPosition="left" :model="form">
-			<u-form-item label="出生年月" labelWidth="140" prop="form.time" borderBottom @click="showTime = true">
-				<u--input v-model="form.time" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择出生年月"></u--input>
-				<u-icon slot="right" name="arrow-right"></u-icon>
+			<u-form-item label="出生年月" labelWidth="140" borderBottom>
+				<u--input v-model="form.birthDate" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="昵称" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入昵称"></u--input>
+			<u-form-item label="昵称" labelWidth="140" borderBottom>
+				<u--input v-model="form.nickName" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="身高" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入身高"></u--input>
+			<u-form-item label="性别" labelWidth="140" prop="form.sex" borderBottom>
+				<u--input v-model="form.sexInfo" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+			</u-form-item>
+			<u-form-item label="身高" labelWidth="140" borderBottom>
+				<u--input v-model="form.height" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				<view class="margin-l" slot="right">cm</view>
 			</u-form-item>
-			<u-form-item label="体重" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入体重"></u--input>
+			<u-form-item label="体重" labelWidth="140" borderBottom>
+				<u--input v-model="form.weight" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				<view class="margin-l" slot="right">kg</view>
 			</u-form-item>
-			<u-form-item label="手机号" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入手机号"></u--input>
+			<u-form-item label="手机号" labelWidth="140" borderBottom>
+				<u--input v-model="form.phonenumber" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="微信号(互相关注可查看)" labelWidth="340" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入微信号"></u--input>
+			<u-form-item label="微信号(互相关注可查看)" labelWidth="340" borderBottom>
+				<u--input v-model="form.wechatId" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="出生地" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入出生地"></u--input>
+			<u-form-item label="出生地" labelWidth="140" borderBottom>
+				<u--input v-model="form.birthplace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="户籍地" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入户籍地"></u--input>
+			<u-form-item label="户籍地" labelWidth="140" borderBottom>
+				<u--input v-model="form.domicilePlace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="学历信息" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入学历信息"></u--input>
+			<u-form-item label="学历信息" labelWidth="140" borderBottom>
+				<u--input v-model="form.education" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="毕业学校" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入毕业学校"></u--input>
+			<u-form-item label="毕业学校" labelWidth="140" borderBottom>
+				<u--input v-model="form.graduationSchool" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="从事行业" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入您从事的行业"></u--input>
+			<u-form-item label="从事行业" labelWidth="140" borderBottom>
+				<u--input v-model="form.professial" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="工作地" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入工作地"></u--input>
+			<u-form-item label="工作地" labelWidth="140" borderBottom>
+				<u--input v-model="form.workplace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="平均月薪" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入月薪"></u--input>
+			<u-form-item label="平均月薪" labelWidth="140" borderBottom>
+				<u--input v-model="form.monthlyPay" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				<view class="margin-l" slot="right">元</view>
 			</u-form-item>
-			<u-form-item label="感情与婚姻状态" labelWidth="240" prop="form.time" borderBottom @click="showType = true">
-				<u--input v-model="form.time" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择婚姻状态"></u--input>
-				<u-icon slot="right" name="arrow-right"></u-icon>
+			<u-form-item label="感情与婚姻状态" labelWidth="240" borderBottom>
+				<u--input v-model="form.maritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="有无子女" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入子女人数,若无则填0"></u--input>
+			<u-form-item label="有无子女" labelWidth="140" borderBottom>
+				<u--input v-model="form.childrenNum" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="房产情况" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入房产情况"></u--input>
+			<u-form-item label="房产情况" labelWidth="140" borderBottom>
+				<u--input v-model="form.propertypermits" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
-			<u-form-item label="兴趣爱好" labelWidth="140" prop="form.name" borderBottom>
-				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入您的兴趣爱好"></u--input>
+			<u-form-item label="兴趣爱好" labelWidth="140" borderBottom>
+				<u--input v-model="form.interests" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
 			<view style="padding: 12px 0;">
 				<text style="font-size: 15px;color: #303133;margin: 6px 0;">个人介绍</text>
-				<view style="border: 1px solid #999;">
+				<view style="border-bottom: 1px solid #EEEEEF;">
 					<u--textarea
-						v-model="form.content"
+						v-model="form.seltIntroduction"
 						autoHeight
-						border="surround"
-						placeholder="请输入个人介绍,选填"
+						disabled
 					></u--textarea>
 				</view>
 			</view>
 			<view class="btn-bottom">
-				<u-button type="primary" text="同意"></u-button>
-				<u-button type="primary" text="驳回"></u-button>
+				<u-button type="primary" text="同意" @click="agree(form.id)"></u-button>
+				<u-button type="primary" text="驳回" @click="turnDown(form.id)"></u-button>
 			</view>
 		</u-form>
-		<u-datetime-picker
-			:show="showTime"
-			v-model="value1"
-			mode="date"
-			minDate="Number(new Date('1970-01-01'))"
-			:maxDate="new Date().getTime()"
-			closeOnClickOverlay
-			@cancel="showTime = false"
-			@close="showTime = false"
-		></u-datetime-picker>
-		<u-picker :show="showType" :columns="columns" closeOnClickOverlay @cancel="showType = false" @close="showType = false"></u-picker>
 	</view>
 </template>
 
 <script>
+	import { getInfo } from '@/api/admin/index'
+	import { infoEdit } from '@/api/my/my.js'
 	let that
 	export default {
 		data(){
 			return{
-				action: 'http://www.example.com/upload',
-				fileList: [],
-				form:{},
-				showTime: false,
-				value1: Number(new Date()),
-				showType: false,
-				columns: [
-					['已婚', '未婚']
-				]
+				id: '',
+				form:{}
 			}
 		},
-		onLoad() {
-			that = this
+		onLoad(option) {
+			that = this;
+			this.id = option.id;
+		},
+		mounted() {
+			this.loadData(this.id);
 		},
 		methods: {
-			afterRead(event){
-				let lists = [].concat(event.file);
-				console.log(lists);
-				lists.map((item) => {
-					that.fileList.push({'url': item.url})
+			loadData(id){
+				getInfo(id).then(res => {
+					console.log(res);
+					this.form = res.data;
+					if(this.form.sex == 1){
+						this.form.sexInfo = "男"
+					}else{
+						this.form.sexInfo = "女"
+					}
 				})
-				console.log(that.fileList);
 			},
-			// 删除图片
-			deletePic(event) {
-				this.fileList.splice(event.index, 1)
+			agree(id){
+				infoEdit({id: id, state: 1}).then(res => {
+					if(res.code == 200){
+						uni.$u.toast('审核成功');
+						setTimeout(() => {
+							let pages = getCurrentPages()   // 获取页面栈
+							let prePage = pages[pages.length - 2] //获取上一页
+							wx.navigateBack({
+								delta: 1
+							})
+						},500)
+					}else{
+						uni.$u.toast('审核失败');
+					}
+				})
 			},
+			turnDown(id,state){
+				infoEdit({id: id, state: 2}).then(res => {
+					if(res.code == 200){
+						uni.$u.toast('驳回成功');
+						setTimeout(() => {
+							let pages = getCurrentPages()   // 获取页面栈
+							let prePage = pages[pages.length - 2] //获取上一页
+							wx.navigateBack({
+								delta: 1
+							})
+						},500)
+					}else{
+						uni.$u.toast('驳回失败');
+					}
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="less">
 	.container{
-		padding: 20px 10px;
+		padding: 20px;
 		picker-view {
 			height: 190px !important;
 		}
 		.u-icon__icon{
 			font-size: 13px !important;
 			line-height: 13px !important;
+		}
+		.u-textarea--disabled{
+			background-color: #FFF !important;
+		}
+	}
+	.img-1{
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin-bottom: 10px;
+		image{
+			width: 110px;
+			height: 110px;
+		}
+		.img-item{
+			width: 32%;
+			&:last-child:nth-child(3n + 2){
+				margin-right: calc((100% - 31%) / 2);
+			}
 		}
 	}
 	.margin-l{

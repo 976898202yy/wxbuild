@@ -1,0 +1,2 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesMy/common/vendor"],{252:function(e,t,a){"use strict";var o=a(4);Object.defineProperty(t,"__esModule",{value:!0}),t.clubAdd=d,t.infoEdit=u;var n=o(a(176));function d(e){return(0,n.default)({url:"/club/activity/add",method:"POST",data:e})}function u(e){return(0,n.default)({url:"/personal/info/edit",method:"PUT",data:e})}}}]);
+//# sourceMappingURL=../../../.sourcemap/mp-weixin/pagesMy/common/vendor.js.map

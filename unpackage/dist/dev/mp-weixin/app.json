@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/my/my",
     "pages/login/login",
     "pages/index/index",
-    "pages/square/square",
-    "pages/my/my"
+    "pages/square/square"
   ],
   "subPackages": [
     {
@@ -23,6 +23,7 @@
     {
       "root": "pagesMy",
       "pages": [
+        "offlineClub",
         "audit",
         "auditDetails",
         "edit",
@@ -60,6 +61,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

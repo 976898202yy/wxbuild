@@ -17,7 +17,20 @@
 }
 .container .box-item image {
   width: 300rpx;
-  height: 200rpx;
+  height: 240rpx;
   border-radius: 8px 0 0 8px;
+}
+.container .no-data {
+  margin-top: 30%;
+}
+.container .no-data image {
+  width: 150px !important;
+  height: 150px !important;
+}
+.container .no-data .u-empty__text {
+  font-size: 28rpx !important;
+}
+.container .u-loadmore__content text {
+  font-size: 12px !important;
 }
 

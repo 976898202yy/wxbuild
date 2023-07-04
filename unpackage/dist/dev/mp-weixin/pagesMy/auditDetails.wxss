@@ -1,5 +1,5 @@
 .container {
-  padding: 20px 10px;
+  padding: 20px;
 }
 .container picker-view {
   height: 190px !important;
@@ -7,6 +7,25 @@
 .container .u-icon__icon {
   font-size: 13px !important;
   line-height: 13px !important;
+}
+.container .u-textarea--disabled {
+  background-color: #FFF !important;
+}
+.img-1 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.img-1 image {
+  width: 110px;
+  height: 110px;
+}
+.img-1 .img-item {
+  width: 32%;
+}
+.img-1 .img-item:last-child:nth-child(3n + 2) {
+  margin-right: calc((100% - 31%) / 2);
 }
 .margin-l {
   margin-left: 20px;

@@ -1,0 +1,22 @@
+.container .scrollContainer {
+  white-space: nowrap;
+}
+.container .vip-info {
+  border-radius: 10px;
+  padding: 20px 20px 10px;
+  background-color: #DCDCDC;
+  white-space: normal;
+  width: 70%;
+  margin: 10px;
+}
+.container .vip-info .title {
+  font-size: 50rpx;
+  margin-bottom: 80px;
+  color: #74500E;
+}
+.container .vip-info .subhead {
+  color: #73480C;
+  font-size: 40rpx;
+  margin-bottom: 10px;
+}
+

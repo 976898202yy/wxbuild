@@ -24,19 +24,34 @@
 				uni.getUserProfile({
 					desc: 'weixin',
 					success: (obj) => {
-						console.log(obj);
-						uni.setStorageSync('encryptedData', obj.encryptedData);
-						uni.setStorageSync('userInfo', obj.userInfo);
 						uni.login({
 							provider: 'weixin',
 							success: (res) => {
 								let code = res.code;
-								if (res.errMsg == 'login:ok') {
-									console.log(res);
-									uni.switchTab({
-										url:"../index/index"
-									})
+								let headers = {
+									'Authorization': 'eyJhbGciOiJIUzUxMiJ9',
+									'content-type': 'application/x-www-form-urlencoded'
 								}
+								uni.request({
+									url: `${this.$url}/wxlogin`,
+									method: 'POST',
+									header: headers,
+									data: {
+										code: code,
+										rawData: obj.rawData,
+										encrypteData: obj.encryptedData,
+										iv: obj.iv
+									},
+									success: (res) => {
+										uni.setStorageSync('token', res.data.token);
+										uni.setStorageSync('userInfo', res.data.user.user);
+									    uni.setStorageSync('viptime', res.data.vipEndTime);   // 会员时间
+										uni.setStorageSync('personalInfoId', res.data.personalInfoId);  //个人id
+										uni.switchTab({
+											url:"../index/index"
+										})
+									}
+								})
 							},
 						});
 					},

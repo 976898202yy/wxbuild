@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "信息",
-  "navigationBarBackgroundColor": "#FFF",
+  "navigationBarBackgroundColor": "#F9C13D",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {

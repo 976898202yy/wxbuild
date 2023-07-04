@@ -9,6 +9,8 @@ Vue.use(uView)
 
 import url from "./config.js"
 Vue.prototype.$url = url;
+import util from './utils/index.js'
+Vue.prototype.$util=util;
 
 // 如此配置即可
 uni.$u.config.unit = 'rpx'
