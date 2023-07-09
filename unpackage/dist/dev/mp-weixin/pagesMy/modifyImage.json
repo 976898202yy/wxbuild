@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "系统图片上传",
+  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-upload": "/uni_modules/uview-ui/components/u-upload/u-upload",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+  }
+}

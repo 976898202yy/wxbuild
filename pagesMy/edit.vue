@@ -341,7 +341,6 @@
 					}))
 					fileListLen++
 				}
-				console.log(this.fileList);
 			},
 			// 删除图片
 			deletePic(event) {

@@ -1,0 +1,1 @@
+<view class="container"><editor class="ql-container" id="editor" placeholder="{{placeholder}}" data-event-opts="{{[['ready',[['onEditorReady',['$event']]]]]}}" bindready="__e"></editor><button type="warn" data-event-opts="{{[['tap',[['undo',['$event']]]]]}}" bindtap="__e">撤销</button></view>

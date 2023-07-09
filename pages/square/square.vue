@@ -2,7 +2,7 @@
 	<view class="container">
 		<u-tabs :list="tabs" :current="current" :scrollable="false" lineColor="#ffffff" :itemStyle="{display:'flex',justifyContent:'start'}" @change="tabChange"></u-tabs>
 		<view v-if="current == 0">
-			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 95vh">
+			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 93vh">
 				<view class="box">
 					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
 						<image :src="item.activityImagesList[0]" mode=""></image>
@@ -18,12 +18,12 @@
 						</view>
 					</view>
 				</view>
-				<u-loadmore v-if="squareList.length > 0" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+				<u-loadmore v-if="squareList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
 					nomore-text="没有更多了" line />
 			</scroll-view>
 		</view>
 		<view v-if="current == 1">
-			<scroll-view>
+			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 93vh">
 				<view class="box">
 					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
 						<image :src="item.activityImagesList[0]" mode=""></image>
@@ -39,10 +39,15 @@
 						</view>
 					</view>
 				</view>
+				<u-loadmore v-if="squareList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+					nomore-text="没有更多了" line />
 			</scroll-view>
 		</view>
 		<view v-if="squareList.length == 0" class="no-data">
 			<u-empty mode="data" icon="http://cdn.uviewui.com/uview/empty/data.png"></u-empty>
+		</view>
+		<view>
+			<u-modal :show="show" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => show = false" @confirm="confirm"></u-modal>
 		</view>
 	</view>
 </template>
@@ -53,7 +58,7 @@
 		data(){
 			return{
 				page: 1,
-				size: 5,
+				size: 6,
 				allPages: '',
 				tabs:[
 					{
@@ -65,7 +70,8 @@
 				current: 0,
 				squareList:[],
 				status: 'loadmore',
-				examine: ''
+				examine: '',
+				show: false
 			}
 		},
 		onShow(){
@@ -86,11 +92,15 @@
 						url: '/pagesSquare/squareDetail?id=' + id
 					})
 				}else{
-					uni.navigateTo({
-						url: '/pagesSquare/form'
-					})
+					this.show = true;
 				}
 				
+			},
+			confirm(){
+				this.show = false;
+				uni.navigateTo({
+					url: '/pagesSquare/form'
+				})
 			},
 			loadData(){
 				let data = {

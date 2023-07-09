@@ -20,7 +20,7 @@
 			<view class="service" @click="openModal()">客服</view>
 			<u-tabs :list="tabs" :current="current" :scrollable="false" lineColor="#ffffff" :itemStyle="{display:'flex',justifyContent:'start'}" @change="tabChange"></u-tabs>
 			<view v-if="current == 0">
-				<scroll-view v-if="dataList.length > 0" scroll-y>
+				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id)">
 							<image :src="item.squareImagesList[0]"></image>
@@ -39,10 +39,12 @@
 							</view>
 						</view>
 					</view>
+					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+						nomore-text="没有更多了" line />
 				</scroll-view>
 			</view>
 			<view v-if="current == 1">
-				<scroll-view v-if="dataList.length > 0">
+				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id)">
 							<image style="width:336rpx;height:260rpx;" :src="item.squareImagesList[0]"></image>
@@ -61,10 +63,12 @@
 							</view>
 						</view>
 					</view>
+					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+						nomore-text="没有更多了" line />
 				</scroll-view>
 			</view>
 			<view v-if="current == 2">
-				<scroll-view v-if="dataList.length > 0">
+				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id)">
 							<image style="width:336rpx;height:260rpx;" :src="item.squareImagesList[0]"></image>
@@ -83,6 +87,8 @@
 							</view>
 						</view>
 					</view>
+					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+						nomore-text="没有更多了" line />
 				</scroll-view>
 			</view>
 			<view v-if="dataList.length == 0" class="no-data">
@@ -103,18 +109,12 @@
 </template>
 
 <script>
-	import { getList } from '@/api/admin/index'
+	import { getList, getPhotoList } from '@/api/admin/index'
 	let that
 	export default {
 		data() {
 			return {
-				bannerList: [{
-					img: require("../../static/swiper1.jpg")
-				},{
-					img: require("../../static/swiper2.jpg")
-				},{
-					img: require("../../static/swiper3.jpg")
-				}],
+				bannerList: [],
 				tabs:[
 					{
 						name: '男生',
@@ -126,6 +126,8 @@
 				],
 				current: 0,
 				page: 1,
+				allPages: '',
+				status: 'loadmore',
 				dataList:[],
 				show:false,
 				title: '添加客服微信',
@@ -135,23 +137,46 @@
 			that = this
 		},
 		onShow(){
-			that.loadData(that.current+1);
+			this.dataList = [];
+			that.loadData();
+			this.loadSwiper();
 		},
 		methods: {
-			loadData(index){
+			loadData(){
 				let data = {
-					sex: index,
+					sex: this.current + 1,
 					state: 1,
 					pageNum: that.page,
-					pageSize: 10
+					pageSize: 6
 				}
 				getList(data).then(res => {
-					that.dataList = res.rows;
+					if(res.rows.length > 0){
+						for (let i = 0; i < res.rows.length; i++) {
+							this.dataList.push(res.rows[i])
+						}
+						if(this.dataList.length > 0){
+							this.allPages = res.totalNum;
+						}else {
+							this.status = 'noMore'
+						}
+					}else{
+						this.dataList = [];
+					}
+				})
+			},
+			loadSwiper(){
+				getPhotoList().then(res => {
+					let rows = res.rows[0];
+					rows.addressList.forEach((item, index) => {
+						this.bannerList.push({img: item});
+					})
 				})
 			},
 			tabChange(e){
+				this.page = 1;
+				this.dataList = [];
 				that.current = e.index;
-				that.loadData(that.current+1);
+				that.loadData();
 			},
 			toDetail(id){
 				uni.navigateTo({
@@ -170,6 +195,19 @@
 				uni.navigateTo({
 					url: '/pagesIndex/friendGroup'
 				})
+			},
+			//   上拉加载
+			scrolltolower(){
+				if (this.page == this.allPages) {
+					this.status = 'noMore'
+					return
+				} else{
+					this.page = this.page + 1;
+					this.status = 'loading';
+					setTimeout(() => {
+						this.loadData();
+					}, 1000)
+				}
 			},
 			previewImage(e){
 				uni.previewImage({

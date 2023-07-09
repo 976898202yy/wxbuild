@@ -31,7 +31,7 @@
 		<view class="bottm-btn">
 			<view style="position: relative;" v-if="vipTime == 0">
 				<view class="btn-money">{{info.vipPrice}}元</view>
-				<u-button type="primary" text="加入俱乐部" @click=""></u-button>
+				<u-button type="primary" text="加入俱乐部" @click="toClub()"></u-button>
 			</view>
 			<view style="position: relative;" v-if="info.registration == 0">
 				<view class="btn-money">{{info.price}}元</view>
@@ -68,6 +68,11 @@
 				getSquareDetails(id).then(res => {
 					this.info = res.data;
 					this.info.people = "男生"+ this.info.defaultBoy + "人 " + "女生" + this.info.defaultGirl + "人"
+				})
+			},
+			toClub(){
+				uni.navigateTo({
+					url: '/pagesMy/offlineClub'
 				})
 			},
 			signUp(){

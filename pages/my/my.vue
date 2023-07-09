@@ -6,7 +6,7 @@
 					<image :src="userInfo.avatar" mode=""></image>
 					<view>{{userInfo.nickName}}</view>
 				</view>
-				<view style="margin-right: 20px;color: #D9001B;">季度会员</view>
+				<view v-if="vipTime > 0" style="color: #D9001B;">会员{{vipTime}}到期</view>
 			</view>
 			<view style="text-align: center;">
 				<image class="vip-img" src="../../static/vip.jpg" mode="widthFix" @click="toClub()"></image>
@@ -21,13 +21,21 @@
 				<image style="width: 50px;height: 50px;" src="../../static/service.png" mode="widthFix"></image>
 				<text>我的客服</text>
 			</view>
-			<view class="my-list-item" @click="toAudit()">
+			<view v-if="isSystem == 1" class="my-list-item" @click="toAudit()">
 				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
 				<text>基本信息审核</text>
 			</view>
-			<view class="my-list-item" @click="toEvent()">
+			<view v-if="isSystem == 1" class="my-list-item" @click="toEvent()">
 				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
 				<text>活动发布</text>
+			</view>
+			<view v-if="isSystem == 1" class="my-list-item" @click="toGroup()">
+				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
+				<text>交友群发布</text>
+			</view>
+			<view v-if="isSystem == 1" class="my-list-item" @click="toModify()">
+				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
+				<text>系统图片上传</text>
 			</view>
 		</view>
 		<view>
@@ -40,16 +48,24 @@
 				></image>
 			</u-modal>
 		</view>
+		<view>
+			<u-modal :show="showInfo" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => showInfo = false" @confirm="confirm"></u-modal>
+		</view>
 	</view>
 </template>
 
 <script>
+	import { getInfoExamine } from '@/api/square/form.js'
 	export default{
 		data(){
 			return{
 				show: false,
 				title: '添加客服微信',
-				userInfo: {}
+				userInfo: {},
+				vipTime: '',
+				examine: '',
+				showInfo: false,
+				isSystem: ''
 			}
 		},
 		onLoad() {
@@ -57,6 +73,9 @@
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync('userInfo');
+			this.vipTime = uni.getStorageSync('viptime');
+			this.isSystem = uni.getStorageSync('isSystem');
+			this.loadExamine();
 		},
 		methods:{
 			previewImage(e){
@@ -87,8 +106,18 @@
 				})
 			},
 			toEdit(){
+				if(this.examine == 1){
+					uni.navigateTo({
+						url: '/pagesMy/edit'
+					})
+				}else{
+					this.showInfo = true;
+				}
+			},
+			confirm(){
+				this.showInfo = false;
 				uni.navigateTo({
-					url: '/pagesMy/edit'
+					url: '/pagesSquare/form'
 				})
 			},
 			toAudit(){
@@ -100,7 +129,22 @@
 				uni.navigateTo({
 					url: '/pagesMy/eventRelease'
 				})
-			}
+			},
+			toGroup(){
+				uni.navigateTo({
+					url: '/pagesMy/datGroup'
+				})
+			},
+			toModify(){
+				uni.navigateTo({
+					url: '/pagesMy/modifyImage'
+				})
+			},
+			loadExamine(){
+				getInfoExamine().then(res => {
+					this.examine = res.msg;
+				})
+			},
 		}
 	}
 </script>

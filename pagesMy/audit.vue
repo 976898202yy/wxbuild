@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<scroll-view v-if="list.length > 0">
+		<scroll-view v-if="list.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 94vh">
 			<view style="border:1px solid #999;">
 				<view class="list-box" v-for="(item, i) in list" :key="i" @click="toDetail(item.id)">
 					<view style="font-size: 28rpx;">
@@ -10,6 +10,8 @@
 					<u-icon name="arrow-right"></u-icon>
 				</view>
 			</view>
+			<u-loadmore v-if="list.length > 8" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
+				nomore-text="没有更多了" line />
 		</scroll-view>
 		<view v-if="list.length == 0" class="no-data">
 			<u-empty mode="data" icon="http://cdn.uviewui.com/uview/empty/data.png"></u-empty>
@@ -23,13 +25,16 @@
 		data(){
 			return{
 				list:[],
-				page: 1
+				page: 1,
+				allPages: '',
+				status: 'loadmore'
 			}
 		},
 		onLoad() {
 			
 		},
 		onShow(){
+			this.list = []
 			this.loadData();
 		},
 		methods: {
@@ -37,16 +42,40 @@
 				let data = {
 					state: 0,
 					pageNum: this.page,
-					pageSize: 10
+					pageSize: 12
 				}
 				getList(data).then(res => {
-					this.list = res.rows;
+					if(res.rows.length > 0){
+						for (let i = 0; i < res.rows.length; i++) {
+							this.list.push(res.rows[i])
+						}
+						if(this.list.length > 0){
+							this.allPages = res.totalNum;
+						}else {
+							this.status = 'noMore'
+						}
+					}else{
+						this.list = []
+					}
 				})
 			},
 			toDetail(id){
 				uni.navigateTo({
 					url: '/pagesMy/auditDetails?id=' + id
 				})
+			},
+			//   上拉加载
+			scrolltolower(){
+				if (this.page == this.allPages) {
+					this.status = 'noMore'
+					return
+				} else{
+					this.page = this.page + 1;
+					this.status = 'loading';
+					setTimeout(() => {
+						this.loadData();
+					}, 1000)
+				}
 			}
 		}
 	}

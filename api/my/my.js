@@ -15,3 +15,19 @@ export function infoEdit(data){
 		data
 	})
 }
+
+export function photoAdd(data){
+	return request({
+		url: '/system/photo/add',
+		method: 'POST',
+		data
+	})
+}
+
+export function groupAdd(data){
+	return request({
+		url: '/friend/group/add',
+		method: 'POST',
+		data
+	})
+}

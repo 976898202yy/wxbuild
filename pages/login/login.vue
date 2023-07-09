@@ -47,6 +47,7 @@
 										uni.setStorageSync('userInfo', res.data.user.user);
 									    uni.setStorageSync('viptime', res.data.vipEndTime);   // 会员时间
 										uni.setStorageSync('personalInfoId', res.data.personalInfoId);  //个人id
+										uni.setStorageSync('isSystem', res.data.isSystem);  // 0：普通用户，1:超管
 										uni.switchTab({
 											url:"../index/index"
 										})

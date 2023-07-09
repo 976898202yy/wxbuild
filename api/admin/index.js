@@ -14,3 +14,17 @@ export function getInfo(id){
 		method: 'GET',
 	})
 }
+
+export function getPhotoList(){
+	return request({
+		url: '/system/photo/list',
+		method: 'GET'
+	})
+}
+
+export function getGroupInfo(){
+	return request({
+		url: '/friend/group/getInfo',
+		method: 'GET',
+	})
+}

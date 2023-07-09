@@ -1,5 +1,5 @@
 {
-    "name" : "wxbuild",
+    "name" : "friendClub",
     "appid" : "__UNI__E01DFF5",
     "description" : "",
     "versionName" : "1.0.0",
@@ -55,9 +55,9 @@
             "urlCheck" : false,
             "minified" : true
         },
-		"optimization":{
-			"subPackages":true
-		},
+        "optimization" : {
+            "subPackages" : true
+        },
         "usingComponents" : true
     },
     "mp-alipay" : {
