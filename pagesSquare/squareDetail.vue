@@ -69,7 +69,7 @@
 			loadData(id){
 				getSquareDetails(id).then(res => {
 					this.info = res.data;
-					this.info.people = "男生"+ this.info.defaultBoy + "人 " + "女生" + this.info.defaultGirl + "人"
+					this.info.people = "男生"+ (this.info.defaultBoy + this.info.actualEnrollmentBoy) + "人 " + "女生" + (this.info.defaultGirl + this.info.actualEnrollmentGirl) + "人";
 				})
 			},
 			toClub(){

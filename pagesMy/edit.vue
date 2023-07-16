@@ -137,8 +137,7 @@
 					childrenNum: '',
 					propertypermits: '',
 					interests: '',
-					seltIntroduction: '',
-					state: 0
+					seltIntroduction: ''
 				},
 				rules: {
 					'birthDate': [{
@@ -289,6 +288,7 @@
 					}else{
 						this.form.sexName = "女"
 					}
+					this.form.sex = this.form.sex - 1;
 					this.form.squareImagesList.forEach((item, index) => {
 						this.fileList.push({url: item});
 					})
@@ -301,6 +301,7 @@
 				this.form.sex = this.form.sex + 1;
 				this.form.id = id;
 				this.form.childrenNum = this.form.childrenNum + '';
+				this.form.state = 0;
 				this.$refs.uForm.validate().then(res => {
 					infoEdit(this.form).then(res => {
 						if(res.code == 200){
