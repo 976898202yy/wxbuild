@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "活动",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs",

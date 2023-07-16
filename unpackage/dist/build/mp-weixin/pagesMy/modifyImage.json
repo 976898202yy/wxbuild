@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "系统图片上传",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {

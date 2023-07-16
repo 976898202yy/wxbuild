@@ -1,7 +1,9 @@
 {
   "navigationBarTitleText": "交友群发布",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+  }
 }

@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
     "pages/square/square",
     "pages/my/my"
@@ -40,7 +39,8 @@
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
-    "color": "#666666",
+    "backgroundColor": "#FEC300",
+    "color": "#FFFFFF",
     "selectedColor": "#666666",
     "list": [
       {

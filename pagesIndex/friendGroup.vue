@@ -13,7 +13,7 @@
 				article: ''
 			}
 		},
-		onShow(){
+		mounted(){
 			this.loadData();
 		},
 		methods:{

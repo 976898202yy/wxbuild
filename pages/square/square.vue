@@ -1,12 +1,22 @@
 <template>
 	<view class="container">
-		<u-tabs :list="tabs" :current="current" :scrollable="false" lineColor="#ffffff" :itemStyle="{display:'flex',justifyContent:'start'}" @change="tabChange"></u-tabs>
+		<u-tabs :list="tabs"
+				:current="current" 
+				:scrollable="false" 
+				:itemStyle="{display:'flex',justifyContent:'start',paddingLeft:'15px',paddingRight:'15px',height:'36px'}" 
+				:activeStyle="{fontWeight:'bold',color: '#333333',transform: 'scale(1.05)'}" 
+				:inactiveStyle="{transform: 'scale(1)'}"
+				lineColor="#333333" 
+				lineHeight="6" 
+				lineWidth="50" 
+				@change="tabChange"
+		></u-tabs>
 		<view v-if="current == 0">
-			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 93vh">
+			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 92vh">
 				<view class="box">
 					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
 						<image :src="item.activityImagesList[0]" mode=""></image>
-						<view style="margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
+						<view style="width: 56%;margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
 							<view>{{tabs[0].name}}</view>
 							<view>{{item.beginTime + item.name}}</view>
 							<view>
@@ -27,7 +37,7 @@
 				<view class="box">
 					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
 						<image :src="item.activityImagesList[0]" mode=""></image>
-						<view style="margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
+						<view style="width: 56%;margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
 							<view>{{tabs[1].name}}</view>
 							<view>{{item.beginTime + item.name}}</view>
 							<view>
@@ -74,10 +84,12 @@
 				show: false
 			}
 		},
-		onShow(){
+		onShow() {
+			this.loadExamine();
+		},
+		mounted(){
 			this.squareList = [];
 			this.loadData();
-			this.loadExamine();
 		},
 		methods:{
 			tabChange(e){
@@ -85,6 +97,7 @@
 				this.page = 1;
 				this.squareList = [];
 				this.loadData();
+				this.loadExamine();
 			},
 			toDetail(id){
 				if(this.examine == 1){

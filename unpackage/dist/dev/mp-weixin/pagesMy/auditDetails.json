@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "信息审核",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {

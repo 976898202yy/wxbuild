@@ -6,55 +6,76 @@
 					<image :src="userInfo.avatar" mode=""></image>
 					<view>{{userInfo.nickName}}</view>
 				</view>
-				<view v-if="vipTime > 0" style="color: #D9001B;">会员{{vipTime}}到期</view>
+				<view v-if="vipTime != 0" style="color: #D9001B;">会员{{vipTime}}到期</view>
 			</view>
-			<view style="text-align: center;">
-				<image class="vip-img" src="../../static/vip.jpg" mode="widthFix" @click="toClub()"></image>
+			<view class="vip-img-box">
+				<image class="vip-img" src="../../static/vip.jpg" @click="toClub()"></image>
 			</view>
 		</view>
 		<view class="my-list">
 			<view class="my-list-item" @click="toEdit()">
-				<image style="width: 50px;height: 50px;" src="../../static/info.png" mode="widthFix"></image>
-				<text>我的信息</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/info.png" mode="widthFix"></image>
+					<text>我的信息</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 			<view class="my-list-item" @click="show = true">
-				<image style="width: 50px;height: 50px;" src="../../static/service.png" mode="widthFix"></image>
-				<text>我的客服</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/service.png" mode="widthFix"></image>
+					<text>我的客服</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 			<view v-if="isSystem == 1" class="my-list-item" @click="toAudit()">
-				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
-				<text>基本信息审核</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/square.png" mode="widthFix"></image>
+					<text>基本信息审核</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 			<view v-if="isSystem == 1" class="my-list-item" @click="toEvent()">
-				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
-				<text>活动发布</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/square.png" mode="widthFix"></image>
+					<text>活动发布</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 			<view v-if="isSystem == 1" class="my-list-item" @click="toGroup()">
-				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
-				<text>交友群发布</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/square.png" mode="widthFix"></image>
+					<text>交友群发布</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 			<view v-if="isSystem == 1" class="my-list-item" @click="toModify()">
-				<image style="width: 50px;height: 50px;" src="../../static/square.png" mode="widthFix"></image>
-				<text>系统图片上传</text>
+				<view class="list-item-left">
+					<image style="width: 30px;height: 30px;" src="../../static/square.png" mode="widthFix"></image>
+					<text>系统图片上传</text>
+				</view>
+				<u-icon name="arrow-right" color="#666666" size="30"></u-icon>
 			</view>
 		</view>
 		<view>
 			<u-modal :show="show" :title="title" confirmText="我知道了" confirmColor="#EFC439" @confirm="() => show = false">
 				<image
-					style="width: 220px;height: 220px;"
+					style="width: 220px;height: 150px;"
 					src="/static/erweima.png"
 					:show-menu-by-longpress="true"
+					mode="widthFix"
 					@click="previewImage"
 				></image>
 			</u-modal>
 		</view>
 		<view>
 			<u-modal :show="showInfo" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => showInfo = false" @confirm="confirm"></u-modal>
+			<u-modal :show="showResult" content="您提交的信息正在审核中,请耐心等待" confirmText="我知道了" @confirm="() => showResult = false"></u-modal>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { getVipInfo } from '@/api/admin/index.js'
 	import { getInfoExamine } from '@/api/square/form.js'
 	export default{
 		data(){
@@ -65,7 +86,8 @@
 				vipTime: '',
 				examine: '',
 				showInfo: false,
-				isSystem: ''
+				isSystem: '',
+				showResult: false
 			}
 		},
 		onLoad() {
@@ -73,7 +95,6 @@
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync('userInfo');
-			this.vipTime = uni.getStorageSync('viptime');
 			this.isSystem = uni.getStorageSync('isSystem');
 			this.loadExamine();
 		},
@@ -110,6 +131,8 @@
 					uni.navigateTo({
 						url: '/pagesMy/edit'
 					})
+				}else if(this.examine == 0){
+					this.showResult = true;
 				}else{
 					this.showInfo = true;
 				}
@@ -143,6 +166,9 @@
 			loadExamine(){
 				getInfoExamine().then(res => {
 					this.examine = res.msg;
+				})
+				getVipInfo().then(res => {
+					this.vipTime = res.vipEndTime.slice(0,10); 
 				})
 			},
 		}

@@ -28,3 +28,10 @@ export function getGroupInfo(){
 		method: 'GET',
 	})
 }
+
+export function getVipInfo(){
+	return request({
+		url: '/getInfo',
+		method: 'GET',
+	})
+}

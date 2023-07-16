@@ -18,8 +18,8 @@ export function infoEdit(data){
 
 export function photoAdd(data){
 	return request({
-		url: '/system/photo/add',
-		method: 'POST',
+		url: '/system/photo/edit',
+		method: 'PUT',
 		data
 	})
 }
@@ -29,5 +29,20 @@ export function groupAdd(data){
 		url: '/friend/group/add',
 		method: 'POST',
 		data
+	})
+}
+
+export function wxPayment(data){
+	return request({
+		url: '/v3/wx/pay/doUnifiedOrder',
+		method: 'POST',
+		data
+	})
+}
+
+export function getVipMoney(){
+	return request({
+		url: '/system/config/getVip',
+		method: 'GET'
 	})
 }

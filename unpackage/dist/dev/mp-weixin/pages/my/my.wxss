@@ -1,11 +1,13 @@
 .container .my-top {
-  padding: 10px 20px;
-  background-color: #F9C13D;
+  background-color: #FEC300;
+  height: 320rpx;
+  position: relative;
 }
 .container .top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
 }
 .container .top .left {
   display: flex;
@@ -17,25 +19,33 @@
   border-radius: 50%;
   margin-right: 20px;
 }
+.container .vip-img-box {
+  position: absolute;
+  left: 7.5%;
+  bottom: -46px;
+}
 .container .vip-img {
-  margin-top: 38rpx;
   border-radius: 8px;
+  height: 80px;
 }
 .container .my-list {
-  border: 1px solid #999;
+  margin-top: 55px;
+  padding: 0 10px;
 }
 .container .my-list .my-list-item {
   display: flex;
-  border-bottom: 1px solid #999;
+  align-items: center;
+  justify-content: space-between;
   line-height: 52px;
   font-size: 28rpx;
-  padding: 18rpx 0;
+  border-bottom: 1px solid #ECECEC;
 }
 .container .my-list .my-list-item text {
   margin-left: 10px;
 }
-.container .my-list .my-list-item:last-child {
-  border-bottom: none;
+.container .my-list .my-list-item .list-item-left {
+  display: flex;
+  align-items: center;
 }
 .container .my-list .list-top {
   border: 1px solid #999;

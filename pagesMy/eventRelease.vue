@@ -135,7 +135,7 @@
 			},
 			// 删除图片
 			deletePic(event) {
-				this['fileList'].splice(0, 1);
+				this['fileList'].splice(event.index, 1);
 			},
 			// 上传图片
 			uploadFilePromise(url) {
@@ -162,7 +162,7 @@
 			submit(){
 				this.form.activityImages = this.fileList.map(function(item,index){
 					return item.url;
-				}).join(",")
+				}).join(";")
 				this.$refs.uForm.validate().then(res => {
 					clubAdd(this.form).then(res => {
 						if(res.code == 200){

@@ -236,10 +236,10 @@
 						trigger: "change"
 					}],
 					'childrenNum': [{
-						type: 'string',
+						type: 'number',
 					    required: true,
 						message: '请输入子女人数',
-						trigger: "change"
+						trigger: ['blur', 'change']
 					}],
 					'propertypermits': [{
 						type: 'string',
@@ -300,6 +300,7 @@
 				}).join(";")
 				this.form.sex = this.form.sex + 1;
 				this.form.id = id;
+				this.form.childrenNum = this.form.childrenNum + '';
 				this.$refs.uForm.validate().then(res => {
 					infoEdit(this.form).then(res => {
 						if(res.code == 200){
@@ -344,7 +345,7 @@
 			},
 			// 删除图片
 			deletePic(event) {
-				this['fileList'].splice(0, 1);
+				this['fileList'].splice(event.index, 1);
 			},
 			// 上传图片
 			uploadFilePromise(url) {

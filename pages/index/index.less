@@ -1,7 +1,23 @@
 
+page{
+	background-color: #FEC300;
+}
 .content{
 	swiper{
 		margin-top: 12px;
+	}
+	.u-icon--right{
+		flex-direction: column !important;
+		margin-top: 6rpx;
+	}
+	.u-tabs__wrapper__nav__line{
+		margin-left: 10px;
+		bottom: 0 !important;
+	}
+	.u-empty{
+		text{
+			color: #fff !important;
+		}
 	}
 }
 .service{
@@ -9,24 +25,27 @@
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	border: 1px solid #333333;
 	text-align: center;
-	line-height: 50px;
-	background-color: #FFFFFF;
+	line-height: 30px;
+	background-color: #333333;
+	color: #FFFFFF;
 	z-index: 999;
 	top: 50%;
 	right: 8px;
 }
 .center-btn{
-	margin: 16px;
+	margin: 12px 16px;
 	display: flex;
 	justify-content: space-between;
 }
 .btn{
-	box-shadow: 2px 2px 5px #999999;
-	padding: 14px 40px;
+	box-shadow: -2px 2px 7px #333;
+	padding: 22px 16px;
 	font-size: 26rpx;
-	border-radius: 8px;
+	border-radius: 4px;
+	background-color: #0E0E0E;
+	color: #fff;
+	width: 38%;
 }
 .boy-list{
 	padding: 10px 4px;
@@ -37,15 +56,23 @@
 	.boy-list-item{
 		width: 48%;
 		margin-bottom: 10px;
-		border-radius: 8px;
-		box-shadow: 0px 0px 5px #999999;
+		border-radius: 4px;
+		box-shadow: 0 2px 7px #333;
+		background-color: #fff;
 		image{
-			width:336rpx;
-			height:260rpx;
-			border-top-left-radius: 8px;
-			border-top-right-radius: 8px;
+			width:100%;
+			height:300rpx;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+		.list-item-bottom{
+			display: flex;
+			margin: 10px 0;
+			font-size: 14px;
+			color: #B4B4B4;
 		}
 	}
+	
 }
 .no-data{
 	margin-top: 20%;
@@ -59,8 +86,11 @@
 }
 .u-swiper{
 	height: 130px !important;
+	background-color: #FEC300 !important;
+	padding: 0px 15px 15px;
 	swiper{
 		height: 130px !important;
+		box-shadow: 0 2px 7px #666;
 	}
 	image{
 		height: 130px !important;
@@ -68,5 +98,30 @@
 }
 .u-tabs__wrapper__nav__item{
 	flex: none !important;
-	padding: 10px;
+}
+
+.login-top{
+	background-color: #FFFFFF;
+	margin: 50px 18px;
+	border-radius: 8px;
+	padding: 20px 0;
+	.login-top-title{
+		text-align: center;
+		font-size: 36rpx;
+		color: #434343;
+	}
+	.login-top-center{
+		padding: 20px 0;
+		text-align: center;
+		font-size: 34rpx;
+		color: #434343;
+	}
+}
+.login-btn{
+	border-radius: 25px;
+	margin: 0 30px;
+	background-color: #0FBE0F;
+	color: #FFFFFF;
+	font-size: 28rpx;
+	padding: 4px;
 }

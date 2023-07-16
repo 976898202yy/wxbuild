@@ -4,41 +4,43 @@
 			<view class="img-item" v-for="(item,i) in info.activityImagesList" :key="i">
 				<image :src="item" mode=""></image>
 			</view>
-		</view>
+		</view>			
 		<view class="form">
 			<u-form labelPosition="left" :model="info">
-				<u-form-item label="活动名称" labelWidth="140" prop="info.name" borderBottom>
-					<u--input v-model="info.name" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<view style="margin-bottom: 10px;font-weight: bold;">活动详情</view>
+				<u-form-item label="活动名称:" labelWidth="180">
+					<u--input v-model="info.name" border="none" disabled disabledColor="#FFFFFF" inputAlign="left"></u--input>
 				</u-form-item>
-				<u-form-item label="开始时间" labelWidth="140" prop="info.time" borderBottom>
-					<u--input v-model="info.beginTime" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<u-form-item label="开始时间:" labelWidth="180">
+					<u--input v-model="info.beginTime" border="none" disabled disabledColor="#FFFFFF" inputAlign="left"></u--input>
 				</u-form-item>
-				<u-form-item label="报名人数" labelWidth="140" prop="info.noVip" borderBottom>
-					<u--input v-model="info.people" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<u-form-item label="报名人数:" labelWidth="180">
+					<u--input v-model="info.people" border="none" disabled disabledColor="#FFFFFF" inputAlign="left"></u--input>
 				</u-form-item>
-				<view style="padding: 12px 0;">
-					<text style="font-size: 15px;color: #303133;margin: 6px 0;">活动简介</text>
-					<view>
-						<u--textarea
-							v-model="info.briefIntroduction"
-							disabled
-							autoHeight
-						></u--textarea>
-					</view>
-				</view>
+				<u-form-item label="活动简介:" labelWidth="180" labelPosition="top">
+					<u--textarea
+						v-model="info.briefIntroduction"
+						disabled
+						autoHeight
+					></u--textarea>
+				</u-form-item>
 			</u-form>
 		</view>
 		<view class="bottm-btn">
 			<view style="position: relative;" v-if="vipTime == 0">
-				<view class="btn-money">{{info.vipPrice}}元</view>
-				<u-button type="primary" text="加入俱乐部" @click="toClub()"></u-button>
+				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
+				<u-button type="primary" color="#211C22" text="加入俱乐部" @click="toClub()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 0">
-				<view class="btn-money">{{info.price}}元</view>
-				<u-button type="primary" text="立即报名" @click="signUp()"></u-button>
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime == 0">
+				<view class="btn-money">非会员价¥{{info.price}}</view>
+				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
+			</view>
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime != 0">
+				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
+				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
 			</view>
 			<view style="position: relative;" v-if="info.registration == 1">
-				<u-button type="primary" disabled text="已报名"></u-button>
+				<u-button type="primary" color="#211C22" disabled text="已报名"></u-button>
 			</view>
 		</view>
 	</view>
@@ -46,12 +48,14 @@
 
 <script>
 	import { getSquareDetails } from '@/api/square/form.js'
+	import { wxPayment } from '@/api/my/my.js'
 	export default{
 		data(){
 			return{
 				id: '',
 				vipTime: '',
-				info:{}
+				info:{},
+				orderObj:{}
 			}
 		},
 		onLoad(option) {
@@ -59,8 +63,6 @@
 		},
 		onShow() {
 			this.vipTime = uni.getStorageSync('viptime');
-		},
-		mounted() {
 			this.loadData(this.id);
 		},
 		methods:{
@@ -76,18 +78,55 @@
 				})
 			},
 			signUp(){
-				
+				let data
+				if(this.vipTime == 0){
+					data = {
+						activityId: this.id,
+						kind: '2',
+						actualPayment: this.info.price,
+						orderPrice: this.info.price 
+					}
+				}else{
+					data = {
+						activityId: this.id,
+						kind: '2',
+						actualPayment: this.info.vipPrice,
+						orderPrice: this.info.vipPrice
+					}
+				}
+				wxPayment(data).then(res => {
+					this.orderObj = res;
+					uni.requestPayment({ //下面参数为必传
+						provider: 'wxpay', //支付类型
+						appId: this.orderObj.appId, //小程序Appid
+						timeStamp: this.orderObj.timeStamp, //创建订单时间戳
+						nonceStr: this.orderObj.nonceStr,
+						package: this.orderObj.package, // 订单包
+						signType: 'MD5', // 加密方式统一'MD5'
+						paySign: this.orderObj.paySign, // 后台支付签名返回
+						success(res) { 
+							uni.$u.toast('支付成功');
+						},
+						fail(err) {
+							uni.$u.toast('支付失败');
+						}
+					})
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="less">
+	page{
+		background-color: #FEC300;
+	}
 	.detail{
-		padding: 10px;
+		padding: 10px 0;
 		.img-top{
 			display: flex;
 			justify-content: space-between;
+			padding: 10px;
 			image{
 				width: 115px;
 				height: 115px;
@@ -101,37 +140,41 @@
 		}
 		.form{
 			margin: 14px 0;
-			padding: 10px;
-			border-radius: 8px;
-			border: 1px solid #dad2d2fa;
+			padding: 20px 10px;
+			border-top-left-radius: 24px;
+			border-top-right-radius: 24px;
+			background-color: #fff;
 		}
 		.margin-l{
 			margin-left: 20px;
+		}
+		.u-form-item__body{
+			padding: 4px 0 !important;
 		}
 		.u-textarea--disabled{
 			background-color: #FFF !important;
 			padding: 10px 0 !important;
 		}
-		.u-button--primary{
-			width: 300rpx !important;
+		.u-button--square{
+			width: 340rpx !important;
 			height: 50px !important;
-			background-color: #211C22 !important;
+			box-shadow: 0 2px 7px #333;
 		}
 		.bottm-btn{
 			display: flex;
 			justify-content: space-around;
-			margin-top: 60px;
+			margin: 50px 0;
 			.btn-money{
 				width: 60px;
-				line-height: 28px;
+				line-height: 18px;
 				background-color: #F9C13D;
 				position: absolute;
-				right: -20px;
-				top: -13px;
+				right: 10px;
+				top: -8px;
 				z-index: 99;
 				text-align: center;
 				border-radius: 14px;
-				font-size: 28rpx;
+				font-size: 18rpx;
 			}
 		}
 	}

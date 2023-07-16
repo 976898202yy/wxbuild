@@ -20,6 +20,7 @@
 </template>
 
 <script>
+	import { getPhotoList } from '@/api/admin/index'
 	import { photoAdd } from '@/api/my/my.js'
 	export default{
 		data(){
@@ -28,7 +29,18 @@
 				address: ''
 			}
 		},
+		mounted(){
+			this.loadData();
+		},
 		methods:{
+			loadData(){
+				getPhotoList().then(res => {
+					let rows = res.rows[0];
+					rows.addressList.forEach((item, index) => {
+						this.fileList.push({url: item});
+					})
+				})
+			},
 			submitSwiper(){
 				this.address = this.fileList.map(function(item,index){
 					return item.url;
@@ -76,7 +88,7 @@
 			},
 			// 删除图片
 			deletePic(event) {
-				this['fileList'].splice(0, 1);
+				this['fileList'].splice(event.index, 1);
 			},
 			// 上传图片
 			uploadFilePromise(url) {

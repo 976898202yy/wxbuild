@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "活动",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarTitleText": "活动详情",
+  "navigationBarBackgroundColor": "#FEC300",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {

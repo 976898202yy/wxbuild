@@ -1,12 +1,14 @@
 {
   "navigationBarTitleText": "理想青年单身交友俱乐部",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
     "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs",
     "u-loadmore": "/uni_modules/uview-ui/components/u-loadmore/u-loadmore",
     "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
-    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal"
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
+    "u-popup": "/uni_modules/uview-ui/components/u-popup/u-popup"
   }
 }

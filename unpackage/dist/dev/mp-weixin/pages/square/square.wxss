@@ -4,6 +4,10 @@
 .container .u-tabs__wrapper__nav__item {
   flex: none !important;
 }
+.container .u-tabs__wrapper__nav__line {
+  margin-left: 10px;
+  bottom: 0 !important;
+}
 .container .box {
   margin: 10px;
 }
@@ -16,7 +20,7 @@
   border-radius: 8px;
 }
 .container .box-item image {
-  width: 300rpx;
+  width: 40%;
   height: 240rpx;
   border-radius: 8px 0 0 8px;
 }

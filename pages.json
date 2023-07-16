@@ -3,19 +3,19 @@
 	// 	"^u-(.*)": "@/uni-modules/uview-ui/component/u-$1/u-$1.vue"
 	// },
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "标题",
-				"navigationBarBackgroundColor": "#F9C13D",
-				"enablePullDownRefresh": false
-			}
-		},
+		// {
+		// 	"path": "pages/login/login",
+		// 	"style": {
+		// 		"navigationBarTitleText": "标题",
+		// 		"navigationBarBackgroundColor": "#F9C13D",
+		// 		"enablePullDownRefresh": false
+		// 	}
+		// },
 		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "理想青年单身交友俱乐部",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -23,7 +23,7 @@
 			"path": "pages/square/square",
 			"style": {
 				"navigationBarTitleText": "活动",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -31,7 +31,7 @@
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"enablePullDownRefresh": false
 			}
 		}
@@ -43,15 +43,15 @@
 			"path": "friendGroup",
 			"style": {
 				"navigationBarTitleText": "交友群",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
 		},{
 			"path": "personnelDetails",
 			"style": {
-				"navigationBarTitleText": "信息",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarTitleText": "用户信息",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -62,15 +62,15 @@
 			"path": "form",
 			"style": {
 				"navigationBarTitleText": "资料填写",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
 		},{
 			"path": "squareDetail",
 			"style": {
-				"navigationBarTitleText": "活动",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarTitleText": "活动详情",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -81,7 +81,7 @@
 			"path": "offlineClub",
 			"style": {
 				"navigationBarTitleText": "线下俱乐部会员",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -89,7 +89,7 @@
 			"path": "audit",
 			"style": {
 				"navigationBarTitleText": "基本信息审核",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -97,7 +97,7 @@
 			"path": "auditDetails",
 			"style": {
 				"navigationBarTitleText": "信息审核",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -105,7 +105,7 @@
 			"path": "edit",
 			"style": {
 				"navigationBarTitleText": "我的信息",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -113,7 +113,7 @@
 			"path": "eventRelease",
 			"style": {
 				"navigationBarTitleText": "活动发布",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -121,7 +121,7 @@
 			"path": "datGroup",
 			"style": {
 				"navigationBarTitleText": "交友群发布",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -129,7 +129,7 @@
 			"path": "modifyImage",
 			"style": {
 				"navigationBarTitleText": "系统图片上传",
-				"navigationBarBackgroundColor": "#F9C13D",
+				"navigationBarBackgroundColor": "#FEC300",
 				"navigationBarTextStyle": "black",
 				"enablePullDownRefresh": false
 			}
@@ -142,7 +142,8 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-		"color":"#666666",
+		"backgroundColor": "#FEC300",
+		"color":"#FFFFFF",
 		"selectedColor": "#666666",
 		"list": [
 			{

@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "资料填写",
-  "navigationBarBackgroundColor": "#F9C13D",
+  "navigationBarBackgroundColor": "#FEC300",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {

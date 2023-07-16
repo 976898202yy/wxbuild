@@ -1,9 +1,13 @@
+page {
+  background-color: #FEC300;
+}
 .detail {
-  padding: 10px;
+  padding: 10px 0;
 }
 .detail .img-top {
   display: flex;
   justify-content: space-between;
+  padding: 10px;
 }
 .detail .img-top image {
   width: 115px;
@@ -17,37 +21,41 @@
 }
 .detail .form {
   margin: 14px 0;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #dad2d2fa;
+  padding: 20px 10px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  background-color: #fff;
 }
 .detail .margin-l {
   margin-left: 20px;
+}
+.detail .u-form-item__body {
+  padding: 4px 0 !important;
 }
 .detail .u-textarea--disabled {
   background-color: #FFF !important;
   padding: 10px 0 !important;
 }
-.detail .u-button--primary {
-  width: 300rpx !important;
+.detail .u-button--square {
+  width: 340rpx !important;
   height: 50px !important;
-  background-color: #211C22 !important;
+  box-shadow: 0 2px 7px #333;
 }
 .detail .bottm-btn {
   display: flex;
   justify-content: space-around;
-  margin-top: 60px;
+  margin: 50px 0;
 }
 .detail .bottm-btn .btn-money {
   width: 60px;
-  line-height: 28px;
+  line-height: 18px;
   background-color: #F9C13D;
   position: absolute;
-  right: -20px;
-  top: -13px;
+  right: 10px;
+  top: -8px;
   z-index: 99;
   text-align: center;
   border-radius: 14px;
-  font-size: 28rpx;
+  font-size: 18rpx;
 }
 

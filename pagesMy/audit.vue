@@ -34,7 +34,8 @@
 			
 		},
 		onShow(){
-			this.list = []
+			this.page = 1;
+			this.list = [];
 			this.loadData();
 		},
 		methods: {

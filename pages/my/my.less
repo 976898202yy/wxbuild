@@ -1,12 +1,14 @@
 .container{
 		.my-top{
-			padding: 10px 20px;
-			background-color: #F9C13D;
+			background-color: #FEC300;
+			height: 320rpx;
+			position: relative;
 		}
 		.top{
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			padding: 10px 20px;
 			.left{
 				display: flex;
 				align-items: center;
@@ -18,24 +20,32 @@
 				margin-right: 20px;
 			}
 		}
+		.vip-img-box{
+			position: absolute;
+			left: 7.5%;
+			bottom: -46px;
+		}
 		.vip-img{
-			margin-top: 38rpx;
 			border-radius: 8px;
+			height: 80px;
 		}
 		.my-list{
-			border: 1px solid #999;
+			margin-top: 55px;
+			padding: 0 10px;
 			.my-list-item{
 				display: flex;
-				border-bottom: 1px solid #999;
+				align-items: center;
+				justify-content: space-between;
 				line-height: 52px;
 				font-size: 28rpx;
-				padding: 18rpx 0;
+				border-bottom: 1px solid #ECECEC;
 				text{
 					margin-left: 10px;
 				}
-			}
-			.my-list-item:last-child{
-				border-bottom: none;
+				.list-item-left{
+					display: flex;
+					align-items: center;
+				}
 			}
 			.list-top{
 				border: 1px solid #999;
