@@ -3,7 +3,7 @@
 		<view class="my-top">
 			<view class="top">
 				<view class="left">
-					<image :src="userInfo.avatar" mode=""></image>
+					<image :src="userInfo.avatar" mode="aspectFill"></image>
 					<view>{{userInfo.nickName}}</view>
 				</view>
 				<view v-if="vipTime != 0" style="color: #D9001B;">会员{{vipTime}}到期</view>
@@ -69,7 +69,7 @@
 		</view>
 		<view>
 			<u-modal :show="showInfo" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => showInfo = false" @confirm="confirm"></u-modal>
-			<u-modal :show="showResult" content="您提交的信息正在审核中,请耐心等待" confirmText="我知道了" @confirm="() => showResult = false"></u-modal>
+			<u-modal :show="showResult" content="您提交的个人信息正在审核中,请耐心等待" confirmText="我知道了" confirmColor="#FEC300" @confirm="() => showResult = false"></u-modal>
 		</view>
 	</view>
 </template>

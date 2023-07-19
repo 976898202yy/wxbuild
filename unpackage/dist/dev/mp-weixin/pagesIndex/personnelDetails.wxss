@@ -30,6 +30,15 @@
 .u-form-item__body__left__content__label {
   color: #999 !important;
 }
+.u-form-item__body {
+  padding: 4px 0 !important;
+}
+.u-textarea__field {
+  color: #333 !important;
+}
+.u-form-item__body__left__content {
+  padding-right: 0 !important;
+}
 .u-input input {
   text-align: left !important;
 }

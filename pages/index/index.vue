@@ -63,7 +63,7 @@
 				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id,item.age)">
-							<image style="width:336rpx;height:260rpx;" :src="item.squareImagesList[0]"></image>
+							<image :src="item.squareImagesList[0]" mode="aspectFill"></image>
 							<view style="padding: 8px;">
 								<view style="display: flex;">
 									<view style="font-size: 28rpx;margin-right: 10px;">{{item.nickName}}</view>
@@ -90,7 +90,7 @@
 				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id,item.age)">
-							<image style="width:336rpx;height:260rpx;" :src="item.squareImagesList[0]"></image>
+							<image :src="item.squareImagesList[0]" mode="aspectFill"></image>
 							<view style="padding: 8px;">
 								<view style="font-size: 28rpx;">{{item.nickName}}</view>
 								<view class="list-item-bottom">
@@ -175,6 +175,7 @@
 			}else{
 				this.showPopup = false;
 				this.dataList = [];
+				this.bannerList = [];
 				that.loadData();
 				this.loadSwiper();
 			}
@@ -204,8 +205,7 @@
 						this.dataList = [];
 					}
 				})
-			},
-			
+			},	
 			loadSwiper(){
 				getPhotoList().then(res => {
 					let rows = res.rows[0];
@@ -221,7 +221,6 @@
 				that.loadData();
 			},
 			toDetail(id,age){
-				console.log(age);
 				uni.navigateTo({
 					url: '/pagesIndex/personnelDetails?id=' + id + '&age=' + age
 				})
@@ -306,6 +305,7 @@
 											uni.showTabBar();
 											this.showPopup = false;
 											this.dataList = [];
+											this.bannerList = [];
 											that.loadData();
 											this.loadSwiper();
 										}else{

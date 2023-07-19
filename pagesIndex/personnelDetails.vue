@@ -2,7 +2,7 @@
 	<view class="details">
 		<view class="detail-top">
 			<view class="left">
-				<image :src="form.squareImagesList[0]" mode=""></image>
+				<image :src="form.squareImagesList[0]" mode="aspectFill"></image>
 			</view>
 			<view class="right">
 				<view style="margin-bottom: 10px;">{{form.nickName}}</view>
@@ -15,7 +15,7 @@
 				</view>
 			</view>
 		</view>
-		<view style="padding: 20px;">
+		<view style="padding: 20px 20px 40px 20px;">
 			<scroll-view scroll-x="true" scroll-with-animation="true" class="scrollContainer">
 				<u-upload
 					:fileList="fileList"
@@ -73,6 +73,26 @@
 						autoHeight
 					></u--textarea>
 				</u-form-item>
+				<view style="margin: 14px 0;font-size: 32rpx;">择偶要求</view>
+				<u-form-item label="年龄" labelWidth="200">
+					<u--input v-model="form.ageRadius" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				</u-form-item>
+				<u-form-item label="身高" labelWidth="200">
+					<u--input v-model="form.heightRadius" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				</u-form-item>
+				<u-form-item label="婚姻状况" labelWidth="200">
+					<u--input v-model="form.mateMaritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				</u-form-item>
+				<u-form-item label="学历" labelWidth="200">
+					<u--input v-model="form.mateEducation" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				</u-form-item>
+				<u-form-item label="其他要求" labelWidth="200">
+					<u--textarea
+						v-model="form.mateCondition"
+						disabled
+						autoHeight
+					></u--textarea>
+				</u-form-item>
 			</u-form>
 		</view>
 	</view>
@@ -99,17 +119,20 @@
 		methods: {
 			loadData(id){
 				getInfo(id).then(res => {
-					console.log(res);
 					this.form = res.data;
 					if(this.form.sex == 1){
 						this.form.sexInfo = "男"
 					}else{
 						this.form.sexInfo = "女"
 					}
+					this.form.ageRadius = this.form.mateMinAge + '岁 - ' + this.form.mateMaxAge + '岁';
+					this.form.heightRadius = this.form.mateMinHeight + 'cm - ' + this.form.mateMaxHeight + 'cm'
 					this.form.monthlyPay = this.form.monthlyPay + '元';
-					this.form.squareImagesList.forEach((item, index) => {
-						this.fileList.push({url: item});
-					})
+					if(this.form.squareImagesList != null){
+						this.form.squareImagesList.forEach((item, index) => {
+							this.fileList.push({url: item});
+						})
+					}
 				})
 			}
 		}
@@ -150,6 +173,15 @@
 	}
 	.u-form-item__body__left__content__label{
 		color: #999 !important;
+	}
+	.u-form-item__body{
+		padding: 4px 0 !important;
+	}
+	.u-textarea__field{
+		color: #333 !important;
+	}
+	.u-form-item__body__left__content{
+		padding-right: 0 !important;
 	}
 	.u-input{
 		input{

@@ -50,8 +50,8 @@
 			},
 			loadData(){
 				getVipMoney().then(res => {
-					this.vipPayment = res.vipYear;
-					this.noVipPayment = res.vipQuarter;
+					this.vipPayment = Number(res.vipYear);
+					this.noVipPayment = Number(res.vipQuarter);
 				})
 			},
 			wxPay(id) {

@@ -26,8 +26,8 @@ export function photoAdd(data){
 
 export function groupAdd(data){
 	return request({
-		url: '/friend/group/add',
-		method: 'POST',
+		url: '/friend/group/edit',
+		method: 'PUT',
 		data
 	})
 }

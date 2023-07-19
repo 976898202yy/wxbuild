@@ -18,27 +18,24 @@
 				<u--input v-model="form.name" border="none" inputAlign="right" placeholder="请输入活动名称"></u--input>
 			</u-form-item>
 			<u-form-item label="开始时间" labelWidth="150" prop="beginTime" borderBottom @click="showTime = true">
-				<u--input v-model="form.beginTime" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择时间"></u--input>
+				<u--input v-model="form.beginTime" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择开始时间"></u--input>
 				<u-icon slot="right" name="arrow-right"></u-icon>
 			</u-form-item>
 			<u-form-item label="非会员价" labelWidth="150" prop="price" borderBottom>
-				<u--input v-model="form.price" border="none" inputAlign="right" placeholder="请输入"></u--input>
+				<u--input v-model="form.price" border="none" inputAlign="right" placeholder="请输入非会员价"></u--input>
 				<view class="margin-l" slot="right">元</view>
 			</u-form-item>
 			<u-form-item label="会员价" labelWidth="150" prop="vipPrice" borderBottom>
-				<u--input v-model="form.vipPrice" border="none" inputAlign="right" placeholder="请输入"></u--input>
+				<u--input v-model="form.vipPrice" border="none" inputAlign="right" placeholder="请输入会员价"></u--input>
 				<view class="margin-l" slot="right">元</view>
 			</u-form-item>
-			<view style="padding: 12px 0;">
-				<text style="font-size: 15px;color: #303133;margin: 6px 0;">活动简介</text>
-				<view style="border-bottom: 1px solid #EEEEEF;">
-					<u--textarea
-						v-model="form.briefIntroduction"
-						autoHeight
-						placeholder="请输入活动简介"
-					></u--textarea>
-				</view>
-			</view>
+			<u-form-item label="活动简介" labelWidth="150" prop="briefIntroduction" labelPosition="top" borderBottom>
+				<u--textarea
+					v-model="form.briefIntroduction"
+					autoHeight
+					placeholder="请输入活动简介"
+				></u--textarea>
+			</u-form-item>
 			<view style="margin-top: 90px;">
 				<u-button type="primary" text="确认发布" @click="submit()"></u-button>
 			</view>
@@ -75,13 +72,13 @@
 					'name': [{
 						type: 'string',
 					    required: true,
-						message: '请填写名称',
+						message: '请填写活动名称',
 						trigger: "change"
 					}],
 					'beginTime': [{
 						type: 'string',
 					    required: true,
-						message: '请选择时间',
+						message: '请选择开始时间',
 						trigger: "change"
 					}],
 					'price': [{
@@ -96,6 +93,12 @@
 						message: '请填写会员价',
 						trigger: "change"
 					}],
+					'briefIntroduction': [{
+						type: 'string',
+					    required: true,
+						message: '请填写活动简介',
+						trigger: "change"
+					}]
 				},	
 				showTime: false,
 				value1: Number(new Date())
@@ -122,7 +125,6 @@
 					})
 				})
 				for (let i = 0; i < lists.length; i++) {
-					console.log(lists[i].url);
 					const result = await this.uploadFilePromise(lists[i].url)
 					let item = this['fileList'][fileListLen]
 					this['fileList'].splice(fileListLen, 1, Object.assign(item, {
@@ -160,9 +162,13 @@
 				})
 			},
 			submit(){
+				if(this.fileList.length == 0){
+					uni.$u.toast('请上传照片');
+					return
+				}
 				this.form.activityImages = this.fileList.map(function(item,index){
 					return item.url;
-				}).join(";")
+				}).join(";")			
 				this.$refs.uForm.validate().then(res => {
 					clubAdd(this.form).then(res => {
 						if(res.code == 200){

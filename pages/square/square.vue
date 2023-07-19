@@ -14,8 +14,8 @@
 		<view v-if="current == 0">
 			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 92vh">
 				<view class="box">
-					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
-						<image :src="item.activityImagesList[0]" mode=""></image>
+					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id, current)">
+						<image :src="item.activityImagesList[0]" mode="aspectFill"></image>
 						<view style="width: 56%;margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
 							<view>{{tabs[0].name}}</view>
 							<view>{{item.beginTime + item.name}}</view>
@@ -35,8 +35,8 @@
 		<view v-if="current == 1">
 			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 93vh">
 				<view class="box">
-					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id)">
-						<image :src="item.activityImagesList[0]" mode=""></image>
+					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id, current)">
+						<image :src="item.activityImagesList[0]" mode="aspectFill"></image>
 						<view style="width: 56%;margin-left: 10px;line-height: 1.5;font-size: 28rpx;">
 							<view>{{tabs[1].name}}</view>
 							<view>{{item.beginTime + item.name}}</view>
@@ -58,6 +58,7 @@
 		</view>
 		<view>
 			<u-modal :show="show" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => show = false" @confirm="confirm"></u-modal>
+			<u-modal :show="showResult" content="您提交的个人信息正在审核中,请耐心等待" confirmText="我知道了" confirmColor="#FEC300" @confirm="() => showResult = false"></u-modal>
 		</view>
 	</view>
 </template>
@@ -81,7 +82,8 @@
 				squareList:[],
 				status: 'loadmore',
 				examine: '',
-				show: false
+				show: false,
+				showResult: false
 			}
 		},
 		onShow() {
@@ -99,11 +101,13 @@
 				this.loadData();
 				this.loadExamine();
 			},
-			toDetail(id){
+			toDetail(id, current){
 				if(this.examine == 1){
 					uni.navigateTo({
-						url: '/pagesSquare/squareDetail?id=' + id
+						url: '/pagesSquare/squareDetail?id=' + id + '&current=' + current
 					})
+				}else if(this.examine == 0){
+					this.showResult = true;
 				}else{
 					this.show = true;
 				}

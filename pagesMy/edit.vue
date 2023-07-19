@@ -1,5 +1,8 @@
 <template>
 	<view class="container">
+		<view style="padding-bottom: 20px;">
+			<view style="font-weight: bold;border-left: 4px solid #FEC300;padding-left: 10px;">个人信息</view>
+		</view>
 		<view>
 			<u-upload
 				width="210"
@@ -28,15 +31,15 @@
 				<u-icon slot="right" name="arrow-right"></u-icon>
 			</u-form-item>
 			<u-form-item label="身高" labelWidth="140" prop="height" borderBottom>
-				<u--input v-model="form.height" border="none" inputAlign="right" placeholder="请输入身高"></u--input>
+				<u--input v-model="form.height" type="number" border="none" inputAlign="right" placeholder="请输入身高"></u--input>
 				<view class="margin-l" slot="right">cm</view>
 			</u-form-item>
 			<u-form-item label="体重" labelWidth="140" prop="weight" borderBottom>
-				<u--input v-model="form.weight" border="none" inputAlign="right" placeholder="请输入体重"></u--input>
+				<u--input v-model="form.weight" type="number" border="none" inputAlign="right" placeholder="请输入体重"></u--input>
 				<view class="margin-l" slot="right">kg</view>
 			</u-form-item>
 			<u-form-item label="手机号" labelWidth="140" prop="phonenumber" borderBottom>
-				<u--input v-model="form.phonenumber" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请输入手机号"></u--input>
+				<u--input v-model="form.phonenumber" type="number" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请输入手机号"></u--input>
 			</u-form-item>
 			<u-form-item label="微信号(互相关注可查看)" labelWidth="340" prop="wechatId" borderBottom>
 				<u--input v-model="form.wechatId" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请输入微信号"></u--input>
@@ -47,8 +50,9 @@
 			<u-form-item label="户籍地" labelWidth="140" prop="domicilePlace" borderBottom>
 				<u--input v-model="form.domicilePlace" border="none" inputAlign="right" placeholder="请输入户籍地"></u--input>
 			</u-form-item>
-			<u-form-item label="学历信息" labelWidth="140" prop="education" borderBottom>
-				<u--input v-model="form.education" border="none" inputAlign="right" placeholder="请输入学历信息"></u--input>
+			<u-form-item label="学历信息" labelWidth="140" prop="educationDm" borderBottom @click="showEdu = true">
+				<u--input v-model="form.education" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择学历信息"></u--input>
+				<u-icon slot="right" name="arrow-right"></u-icon>
 			</u-form-item>
 			<u-form-item label="毕业学校" labelWidth="140" prop="graduationSchool" borderBottom>
 				<u--input v-model="form.graduationSchool" border="none" inputAlign="right" placeholder="请输入毕业学校"></u--input>
@@ -60,7 +64,7 @@
 				<u--input v-model="form.workplace" border="none" inputAlign="right" placeholder="请输入工作地"></u--input>
 			</u-form-item>
 			<u-form-item label="平均月薪" labelWidth="140" prop="monthlyPay" borderBottom>
-				<u--input v-model="form.monthlyPay" border="none" inputAlign="right" placeholder="请输入月薪"></u--input>
+				<u--input v-model="form.monthlyPay" type="number" border="none" inputAlign="right" placeholder="请输入月薪"></u--input>
 				<view class="margin-l" slot="right">元</view>
 			</u-form-item>
 			<u-form-item label="感情与婚姻状态" labelWidth="240" prop="maritalStatusDm" borderBottom @click="showType = true">
@@ -68,29 +72,66 @@
 				<u-icon slot="right" name="arrow-right"></u-icon>
 			</u-form-item>
 			<u-form-item label="有无子女" labelWidth="140" prop="childrenNum" borderBottom>
-				<u--input v-model="form.childrenNum" border="none" inputAlign="right" placeholder="请输入子女人数,若无则填0"></u--input>
+				<u--input v-model="form.childrenNum" type="number" border="none" inputAlign="right" placeholder="请输入子女人数,若无则填0"></u--input>
 			</u-form-item>
 			<u-form-item label="房产情况" labelWidth="140" prop="propertypermits" borderBottom>
 				<u--input v-model="form.propertypermits" border="none" inputAlign="right" placeholder="请输入房产情况"></u--input>
 			</u-form-item>
 			<u-form-item label="兴趣爱好" labelWidth="140" prop="interests" borderBottom>
-				<u--input v-model="form.interests" border="none" inputAlign="right" placeholder="请输入您的兴趣爱好"></u--input>
+				<u--textarea
+					v-model="form.interests"
+					autoHeight
+					border="none"
+					placeholder="请输入您的兴趣爱好"
+				></u--textarea>
 			</u-form-item>
-			<view style="padding: 12px 0;">
-				<text style="font-size: 15px;color: #303133;margin: 6px 0;">个人介绍</text>
-				<view style="border-bottom: 1px solid #EEEEEF;">
-					<u--textarea
-						v-model="form.seltIntroduction"
-						autoHeight
-						border="surround"
-						placeholder="请输入个人介绍,选填"
-					></u--textarea>
-				</view>
+			<u-form-item label="个人介绍" labelWidth="140" labelPosition="top" borderBottom>
+				<u--textarea
+					v-model="form.seltIntroduction"
+					autoHeight
+					border="surround"
+					placeholder="请输入个人介绍,选填"
+				></u--textarea>
+			</u-form-item>
+			<view style="padding: 20px 0;">
+				<view style="font-weight: bold;border-left: 4px solid #FEC300;padding-left: 10px;">择偶标准</view>
 			</view>
-			<view style="margin: 30px auto;">
-				<u-button type="primary" text="确认信息修改并提交" color="#211C22" @click="submit(form.id)"></u-button>
-			</view>
+			<u-form-item label="最小年龄" labelWidth="140" prop="mateMinAge" borderBottom>
+				<u--input v-model="form.mateMinAge" type="number" border="none" inputAlign="right" placeholder="请输入择偶最小年龄"></u--input>
+				<view class="margin-l" slot="right">岁</view>
+			</u-form-item>
+			<u-form-item label="最大年龄" labelWidth="140" prop="mateMaxAge" borderBottom>
+				<u--input v-model="form.mateMaxAge" type="number" border="none" inputAlign="right" placeholder="请输入择偶最大年龄"></u--input>
+				<view class="margin-l" slot="right">岁</view>
+			</u-form-item>
+			<u-form-item label="最小身高" labelWidth="140" prop="mateMinHeight" borderBottom>
+				<u--input v-model="form.mateMinHeight" type="number" border="none" inputAlign="right" placeholder="请输入择偶最小身高"></u--input>
+				<view class="margin-l" slot="right">cm</view>
+			</u-form-item>
+			<u-form-item label="最大身高" labelWidth="140" prop="mateMaxHeight" borderBottom>
+				<u--input v-model="form.mateMaxHeight" type="number" border="none" inputAlign="right" placeholder="请输入择偶最大身高"></u--input>
+				<view class="margin-l" slot="right">cm</view>
+			</u-form-item>
+			<u-form-item label="婚姻状况" labelWidth="140" prop="mateMaritalStatusDm" borderBottom @click="showMateMarital = true">
+				<u--input v-model="form.mateMaritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择婚姻状况"></u--input>
+				<u-icon slot="right" name="arrow-right"></u-icon>
+			</u-form-item>
+			<u-form-item label="学历" labelWidth="140" prop="mateEducationDm" borderBottom @click="showEducation = true">
+				<u--input v-model="form.mateEducation" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择学历"></u--input>
+				<u-icon slot="right" name="arrow-right"></u-icon>
+			</u-form-item>
+			<u-form-item label="其他要求" labelWidth="140" labelPosition="top" borderBottom>
+				<u--textarea
+					v-model="form.mateCondition"
+					autoHeight
+					border="surround"
+					placeholder="请输入其他要求,选填"
+				></u--textarea>
+			</u-form-item>
 		</u-form>
+		<view style="margin: 30px auto;">
+			<u-button type="primary" text="确认信息修改并提交" color="#211C22" @click="submit(form.id)"></u-button>
+		</view>
 		<u-datetime-picker
 			:show="showTime"
 			v-model="value1"
@@ -102,8 +143,11 @@
 			@close="showTime = false"
 			@confirm="dateConfirm"
 		></u-datetime-picker>
+		<u-picker :show="showEdu" :columns="eduColumns" closeOnClickOverlay @cancel="showEdu = false" @close="showEdu = false" @confirm="eduConfirm"></u-picker>
 		<u-picker :show="showTypeSex" :columns="sexColumns" closeOnClickOverlay @cancel="showTypeSex = false" @close="showTypeSex = false" @confirm="sexConfirm"></u-picker>
 		<u-picker :show="showType" :columns="columns" closeOnClickOverlay @cancel="showType = false" @close="showType = false" @confirm="maritalConfirm"></u-picker>
+		<u-picker :show="showMateMarital" :columns="columns" closeOnClickOverlay @cancel="showMateMarital = false" @close="showMateMarital = false" @confirm="mateMaritalConfirm"></u-picker>
+		<u-picker :show="showEducation" :columns="eduColumns" closeOnClickOverlay @cancel="showEducation = false" @close="showEducation = false" @confirm="educationConfirm"></u-picker>
 	</view>
 </template>
 
@@ -128,6 +172,7 @@
 					birthplace: '',
 					domicilePlace: '',
 					education: '',
+					educationDm: '',
 					graduationSchool: '',
 					professial: '',
 					workplace: '',
@@ -137,7 +182,16 @@
 					childrenNum: '',
 					propertypermits: '',
 					interests: '',
-					seltIntroduction: ''
+					seltIntroduction: '',
+					mateMinAge: '',
+					mateMaxAge: '',
+					mateMinHeight: '',
+					mateMaxHeight: '',
+					mateMaritalStatus: '',
+					mateMaritalStatusDm: '',
+					mateEducation: '',
+					mateEducationDm: '',
+					mateCondition: ''
 				},
 				rules: {
 					'birthDate': [{
@@ -198,7 +252,7 @@
 						message: '请输入户籍地',
 						trigger: "change"
 					}],
-					'education': [{
+					'educationDm': [{
 						type: 'string',
 					    required: true,
 						message: '请输入学历信息',
@@ -251,17 +305,59 @@
 					    required: true,
 						message: '请输入兴趣爱好',
 						trigger: "change"
+					}],
+					'mateMinAge':[{
+						type: 'string',
+					    required: true,
+						message: '请输入最小年龄',
+						trigger: "change"
+					}],
+					'mateMaxAge':[{
+						type: 'string',
+					    required: true,
+						message: '请输入最大年龄',
+						trigger: "change"
+					}],
+					'mateMinHeight':[{
+						type: 'string',
+					    required: true,
+						message: '请输入最小身高',
+						trigger: "change"
+					}],
+					'mateMaxHeight':[{
+						type: 'string',
+					    required: true,
+						message: '请输入最大身高',
+						trigger: "change"
+					}],
+					'mateMaritalStatusDm':[{
+						type: 'string',
+					    required: true,
+						message: '请选择婚姻状态',
+						trigger: "change"
+					}],
+					'mateEducationDm': [{
+						type: 'string',
+					    required: true,
+						message: '请选择学历',
+						trigger: "change"
 					}]
 				},
 				showTime: false,
 				value1: Number(new Date()),
+				showEdu: false,
 				showTypeSex: false,
 				sexColumns: [
 				    ['男', '女']	
 				],
 				showType: false,
 				columns: [
-					['已婚', '未婚']
+					['未婚', '离异']
+				],
+				showMateMarital: false,
+				showEducation: false,
+				eduColumns:[
+					['高中', '大专', '本科', '研究生', '博士生']
 				],
 				personalInfoId: ''
 			}
@@ -295,14 +391,22 @@
 				})
 			},
 			submit(id){
+				if(this.fileList.length == 0){
+					uni.$u.toast('请上传照片');
+					return
+				}
 				this.form.squareImages = this.fileList.map(function(item,index){
 					return item.url;
 				}).join(";")
-				this.form.sex = this.form.sex + 1;
 				this.form.id = id;
 				this.form.childrenNum = this.form.childrenNum + '';
 				this.form.state = 0;
 				this.$refs.uForm.validate().then(res => {
+					if(this.form.sexName == '男'){
+						this.form.sex = '1'
+					}else if(this.form.sexName == '女'){
+						this.form.sex = '2'
+					}
 					infoEdit(this.form).then(res => {
 						if(res.code == 200){
 							uni.$u.toast('修改成功');
@@ -374,15 +478,30 @@
 				this.form.birthDate = this.result(e.value, e.mode)
 				this.showTime = false
 			},
+			eduConfirm(e){
+				this.form.educationDm = e.indexs[0] + '';
+				this.form.education = e.value[0];
+				this.showEdu = false;
+			},
 			sexConfirm(e) {
-				this.form.sex = e.indexs[0];
+				this.form.sex = e.indexs[0] + '';
 				this.form.sexName = e.value[0];
 				this.showTypeSex = false;
 			},
 			maritalConfirm(e){
-				this.form.maritalStatusDm = e.indexs[0];
+				this.form.maritalStatusDm = e.indexs[0] + '';
 				this.form.maritalStatus = e.value[0];
 				this.showType = false;
+			},
+			mateMaritalConfirm(e){
+				this.form.mateMaritalStatusDm = e.indexs[0] + '';
+				this.form.mateMaritalStatus = e.value[0];
+				this.showMateMarital = false;
+			},
+			educationConfirm(e){
+				this.form.mateEducationDm = e.indexs[0] + '';
+				this.form.mateEducation = e.value[0];
+				this.showEducation = false;
 			},
 			result(time, mode) {
 				const timeFormat = uni.$u.timeFormat

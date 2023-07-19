@@ -96,10 +96,7 @@
 							uni.$u.toast('请输入内容');
 						}else{
 							this.content = res.html
-							let sysFriendGroup = {
-								content: this.content
-							}
-							groupAdd(sysFriendGroup).then(res => {
+							groupAdd({content: this.content}).then(res => {
 								if(res.code == 200){
 									uni.$u.toast('发布成功');
 									setTimeout(() => {

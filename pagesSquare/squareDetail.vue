@@ -2,7 +2,7 @@
 	<view class="detail">
 		<view class="img-top">
 			<view class="img-item" v-for="(item,i) in info.activityImagesList" :key="i">
-				<image :src="item" mode=""></image>
+				<image :src="item" mode="aspectFill"></image>
 			</view>
 		</view>			
 		<view class="form">
@@ -27,20 +27,23 @@
 			</u-form>
 		</view>
 		<view class="bottm-btn">
-			<view style="position: relative;" v-if="vipTime == 0">
+			<view style="position: relative;" v-if="vipTime == 0 && current == 0">
 				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
 				<u-button type="primary" color="#211C22" text="加入俱乐部" @click="toClub()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 0 && vipTime == 0">
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime == 0 && current == 0">
 				<view class="btn-money">非会员价¥{{info.price}}</view>
 				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 0 && vipTime != 0">
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime != 0 && current == 0">
 				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
 				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 1">
+			<view style="position: relative;" v-if="info.registration == 1 && current == 0">
 				<u-button type="primary" color="#211C22" disabled text="已报名"></u-button>
+			</view>
+			<view style="position: relative;" v-if="current == 1">
+				<u-button type="primary" color="#211C22" disabled text="活动已截止"></u-button>
 			</view>
 		</view>
 	</view>
@@ -53,6 +56,7 @@
 		data(){
 			return{
 				id: '',
+				current: '',
 				vipTime: '',
 				info:{},
 				orderObj:{}
@@ -60,6 +64,7 @@
 		},
 		onLoad(option) {
 			this.id = option.id;
+			this.current = option.current;
 		},
 		onShow() {
 			this.vipTime = uni.getStorageSync('viptime');

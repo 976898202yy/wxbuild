@@ -1,11 +1,23 @@
 <template>
 	<view class="container">
+		<view style="padding-bottom: 20px;">
+			<view style="font-weight: bold;border-left: 4px solid #FEC300;padding-left: 10px;">个人信息</view>
+		</view>
 		<view class="img-1">
-			<view class="img-item" v-for="(item, i) in form.squareImagesList">
-				<image :src="item" mode=""></image>
-			</view>
+			<u-upload
+				:fileList="fileList"
+				name="1"
+				:maxCount="fileList.length"
+				:previewFullImage="true"
+			></u-upload>
 		</view>
 		<u-form labelPosition="left" :model="form">
+			<u-form-item label="真实姓名" labelWidth="140" borderBottom>
+				<u--input v-model="form.name" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+			</u-form-item>
+			<u-form-item label="身份证号" labelWidth="140" borderBottom>
+				<u--input v-model="form.idcard" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+			</u-form-item>
 			<u-form-item label="出生年月" labelWidth="140" borderBottom>
 				<u--input v-model="form.birthDate" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
@@ -61,23 +73,56 @@
 				<u--input v-model="form.propertypermits" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 			</u-form-item>
 			<u-form-item label="兴趣爱好" labelWidth="140" borderBottom>
-				<u--input v-model="form.interests" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<u--textarea
+					v-model="form.interests"
+					disabled
+					autoHeight
+				></u--textarea>
 			</u-form-item>
-			<view style="padding: 12px 0;">
-				<text style="font-size: 15px;color: #303133;margin: 6px 0;">个人介绍</text>
-				<view style="border-bottom: 1px solid #EEEEEF;">
-					<u--textarea
-						v-model="form.seltIntroduction"
-						autoHeight
-						disabled
-					></u--textarea>
-				</view>
+			<u-form-item label="个人介绍" labelWidth="140" labelPosition="top" borderBottom>
+				<u--textarea
+					v-model="form.seltIntroduction"
+					disabled
+					autoHeight
+				></u--textarea>
+			</u-form-item>
+			<view style="padding: 20px 0;">
+				<view style="font-weight: bold;border-left: 4px solid #FEC300;padding-left: 10px;">择偶标准</view>
 			</view>
-			<view class="btn-bottom">
-				<u-button type="primary" text="同意" @click="agree(form.id)"></u-button>
-				<u-button type="primary" text="驳回" @click="turnDown(form.id)"></u-button>
-			</view>
+			<u-form-item label="最小年龄" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateMinAge" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<view class="margin-l" slot="right">岁</view>
+			</u-form-item>
+			<u-form-item label="最大年龄" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateMaxAge" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" ></u--input>
+				<view class="margin-l" slot="right">岁</view>
+			</u-form-item>
+			<u-form-item label="最小身高" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateMinHeight" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<view class="margin-l" slot="right">cm</view>
+			</u-form-item>
+			<u-form-item label="最大身高" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateMaxHeight" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+				<view class="margin-l" slot="right">cm</view>
+			</u-form-item>
+			<u-form-item label="婚姻状况" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateMaritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
+			</u-form-item>
+			<u-form-item label="学历" labelWidth="140" borderBottom>
+				<u--input v-model="form.mateEducation" border="none" disabled disabledColor="#FFFFFF" inputAlign="right" placeholder="请选择学历"></u--input>
+			</u-form-item>
+			<u-form-item label="其他要求" labelWidth="140" labelPosition="top" borderBottom>
+				<u--textarea
+					v-model="form.mateCondition"
+					disabled
+					autoHeight
+				></u--textarea>
+			</u-form-item>
 		</u-form>
+		<view class="btn-bottom">
+			<u-button type="primary" text="同意" @click="agree(form.id)"></u-button>
+			<u-button type="primary" text="驳回" @click="turnDown(form.id)"></u-button>
+		</view>
 	</view>
 </template>
 
@@ -89,6 +134,7 @@
 		data(){
 			return{
 				id: '',
+				fileList: [],
 				form:{}
 			}
 		},
@@ -109,6 +155,9 @@
 					}else{
 						this.form.sexInfo = "女"
 					}
+					this.form.squareImagesList.forEach((item, index) => {
+						this.fileList.push({url: item});
+					})
 				})
 			},
 			agree(id){
@@ -158,24 +207,29 @@
 			line-height: 13px !important;
 		}
 		.u-textarea--disabled{
-			background-color: #FFF !important;
+			background-color: #fff !important;
+		}
+		.u-textarea{
+			padding: 0 !important;
 		}
 	}
 	.img-1{
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		margin-bottom: 10px;
-		image{
-			width: 110px;
-			height: 110px;
+		.u-upload__wrap{
+			width: 100%;
 		}
-		.img-item{
-			width: 32%;
+		image{
+			width: 120px !important;
+			height: 120px !important;
+		}
+		.u-upload__wrap__preview{
+			width: 30%;
 			&:last-child:nth-child(3n + 2){
 				margin-right: calc((100% - 31%) / 2);
 			}
 		}
+	}
+	.u-upload__deletable{
+		z-index: -1 !important;
 	}
 	.margin-l{
 		margin-left: 20px;
