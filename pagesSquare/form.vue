@@ -110,11 +110,11 @@
 				<u--input v-model="form.mateMaxAge" type="number" border="none" inputAlign="right" placeholder="请输入择偶最大年龄"></u--input>
 				<view class="margin-l" slot="right">岁</view>
 			</u-form-item>
-			<u-form-item label="最小身高" labelWidth="140" prop="mateMinHeight" borderBottom>
+			<u-form-item label="最低身高" labelWidth="140" prop="mateMinHeight" borderBottom>
 				<u--input v-model="form.mateMinHeight" type="number" border="none" inputAlign="right" placeholder="请输入择偶最小身高"></u--input>
 				<view class="margin-l" slot="right">cm</view>
 			</u-form-item>
-			<u-form-item label="最大身高" labelWidth="140" prop="mateMaxHeight" borderBottom>
+			<u-form-item label="最高身高" labelWidth="140" prop="mateMaxHeight" borderBottom>
 				<u--input v-model="form.mateMaxHeight" type="number" border="none" inputAlign="right" placeholder="请输入择偶最大身高"></u--input>
 				<view class="margin-l" slot="right">cm</view>
 			</u-form-item>
@@ -152,7 +152,7 @@
 		<u-picker :show="showEdu" :columns="eduColumns" closeOnClickOverlay @cancel="showEdu = false" @close="showEdu = false" @confirm="eduConfirm"></u-picker>
 		<u-picker :show="showTypeSex" :columns="sexColumns" closeOnClickOverlay @cancel="showTypeSex = false" @close="showTypeSex = false" @confirm="sexConfirm"></u-picker>
 		<u-picker :show="showType" :columns="columns" closeOnClickOverlay @cancel="showType = false" @close="showType = false" @confirm="maritalConfirm"></u-picker>
-		<u-picker :show="showMateMarital" :columns="columns" closeOnClickOverlay @cancel="showMateMarital = false" @close="showMateMarital = false" @confirm="mateMaritalConfirm"></u-picker>
+		<u-picker :show="showMateMarital" :columns="mateColumns" closeOnClickOverlay @cancel="showMateMarital = false" @close="showMateMarital = false" @confirm="mateMaritalConfirm"></u-picker>
 		<u-picker :show="showEducation" :columns="eduColumns" closeOnClickOverlay @cancel="showEducation = false" @close="showEducation = false" @confirm="educationConfirm"></u-picker>
 		<u-modal :show="show" :content='modalContent' confirmText="我知道了" confirmColor="#FEC300" @confirm="() => show = false"></u-modal>
 	</view>
@@ -379,6 +379,9 @@
 					['未婚', '离异']
 				],
 				showMateMarital: false,
+				mateColumns:[
+					['未婚', '离异','未婚或离异']
+				],
 				showEducation: false,
 				eduColumns:[
 					['高中', '大专', '本科', '研究生', '博士生']

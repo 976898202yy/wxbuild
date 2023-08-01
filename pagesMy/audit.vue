@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<scroll-view v-if="list.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 94vh">
+		<scroll-view class="scroll-content" v-if="list.length > 0" scroll-y @scrolltolower="scrolltolower">
 			<view style="border:1px solid #999;">
 				<view class="list-box" v-for="(item, i) in list" :key="i" @click="toDetail(item.id)">
 					<view style="font-size: 28rpx;">
@@ -26,8 +26,9 @@
 			return{
 				list:[],
 				page: 1,
-				allPages: '',
-				status: 'loadmore'
+				status: 'loadmore',
+				pageSize: 12,
+				isLoading: false
 			}
 		},
 		onLoad() {
@@ -40,24 +41,29 @@
 		},
 		methods: {
 			loadData(){
+				this.isLoading = true;
+				this.status = 'loadmore';
 				let data = {
 					state: 0,
 					pageNum: this.page,
-					pageSize: 12
+					pageSize: this.pageSize
 				}
 				getList(data).then(res => {
-					if(res.rows.length > 0){
-						for (let i = 0; i < res.rows.length; i++) {
-							this.list.push(res.rows[i])
+					setTimeout(() => {
+						if(res.rows.length > 0){
+							for (let i = 0; i < res.rows.length; i++) {
+								this.list.push(res.rows[i])
+							}
+							if(this.page * that.pageSize >= res.total){
+								this.status = 'noMore'
+							}else{
+								this.status = 'loadmore'
+							}
+							this.isLoading = false;
+						}else{
+							this.list = [];
 						}
-						if(this.list.length > 0){
-							this.allPages = res.totalNum;
-						}else {
-							this.status = 'noMore'
-						}
-					}else{
-						this.list = []
-					}
+					}, 1000)
 				})
 			},
 			toDetail(id){
@@ -67,16 +73,10 @@
 			},
 			//   上拉加载
 			scrolltolower(){
-				if (this.page == this.allPages) {
-					this.status = 'noMore'
-					return
-				} else{
-					this.page = this.page + 1;
-					this.status = 'loading';
-					setTimeout(() => {
-						this.loadData();
-					}, 1000)
-				}
+				if(this.status == 'noMore') return
+				if(this.isLoading) return
+				this.page ++;
+				this.loadData();
 			}
 		}
 	}
@@ -104,6 +104,9 @@
 			.u-empty__text{
 				font-size: 28rpx !important;
 			}
+		}
+		.scroll-content{
+			height:calc(100vh - var(--window-top));
 		}
 	}
 </style>

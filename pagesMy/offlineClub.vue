@@ -16,8 +16,8 @@
 					<view class="title">季度会员</view>
 					<view class="subhead">条件及权益</view>
 					<view>
-						<view>• 支付{{noVipPayment}}元/年度会员费,可免费参加俱乐部大部分活动</view>
-						<view>•可以参加俱乐部一年内所有线下活动，目前每周二四晚上和每周六下午都有活动。</view>
+						<view>• 支付{{noVipPayment}}元/季度会员费,可免费参加俱乐部大部分活动</view>
+						<view>•可以参加俱乐部一年内所有线下活动，目前俱乐部每周都有三场活动。</view>
 						<view>(会员权益不含部分专场，比如研究生专场、土著专场等，需要满足条件）</view>
 						<view>•注：有聚餐或者其他消费的，会员需要AA制支付费用</view>
 					</view>

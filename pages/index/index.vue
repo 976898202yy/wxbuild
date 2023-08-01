@@ -58,9 +58,12 @@
 					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
 						nomore-text="没有更多了" line />
 				</scroll-view>
+				<view v-if="dataList.length == 0" class="no-data">
+					<u-empty text="正在加载中..."></u-empty>
+				</view>
 			</view>
 			<view v-if="current == 1">
-				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
+				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" lower-threshold="5rpx" style="height: 64vh">
 					<view class="boy-list">
 						<view class="boy-list-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item.id,item.age)">
 							<image :src="item.squareImagesList[0]" mode="aspectFill"></image>
@@ -85,6 +88,9 @@
 					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
 						nomore-text="没有更多了" line />
 				</scroll-view>
+				<view v-if="dataList.length == 0" class="no-data">
+					<u-empty text="正在加载中..."></u-empty>
+				</view>
 			</view>
 			<view v-if="current == 2">
 				<scroll-view v-if="dataList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 64vh">
@@ -109,9 +115,9 @@
 					<u-loadmore v-if="dataList.length > 6" :status="status" loading-text="努力加载中" loadmore-text="轻轻上拉"
 						nomore-text="没有更多了" line />
 				</scroll-view>
-			</view>
-			<view v-if="dataList.length == 0" class="no-data">
-				<u-empty text="正在努力开发中..." mode="page" icon="http://cdn.uviewui.com/uview/empty/page.png"></u-empty>
+				<view v-if="dataList.length == 0" class="no-data">
+					<u-empty text="正在努力开发中..." mode="page" icon="http://cdn.uviewui.com/uview/empty/page.png"></u-empty>
+				</view>
 			</view>
 			<view>
 				<u-modal :show="show" :title="title" confirmText="我知道了" confirmColor="#EFC439" @confirm="() => show = false">
@@ -157,8 +163,9 @@
 				],
 				current: 0,
 				page: 1,
-				allPages: '',
+				pageSize: 6,
 				status: 'loadmore',
+				isLoading: false,
 				dataList:[],
 				show:false,
 				title: '添加客服微信',
@@ -167,6 +174,9 @@
 		},
 		onLoad() {
 			that = this
+		},
+		onShow() {
+			this.isLoading = true;
 		},
 		mounted(){
 			let token = uni.getStorageSync('token');
@@ -185,25 +195,30 @@
 		},
 		methods: {
 			loadData(){
+				this.isLoading = true;
+				this.status = 'loadmore';
 				let data = {
 					sex: this.current + 1,
 					state: 1,
 					pageNum: that.page,
-					pageSize: 6
+					pageSize: that.pageSize
 				}
 				getList(data).then(res => {
-					if(res.rows.length > 0){
-						for (let i = 0; i < res.rows.length; i++) {
-							this.dataList.push(res.rows[i])
+					setTimeout(() => {
+						if(res.rows.length > 0){
+							for (let i = 0; i < res.rows.length; i++) {
+								this.dataList.push(res.rows[i])
+							}
+							if(this.page * that.pageSize >= res.total){
+								this.status = 'noMore'
+							}else{
+								this.status = 'loadmore'
+							}
+							this.isLoading = false;
+						}else{
+							this.dataList = [];
 						}
-						if(this.dataList.length > 0){
-							this.allPages = res.totalNum;
-						}else {
-							this.status = 'noMore'
-						}
-					}else{
-						this.dataList = [];
-					}
+					}, 1000)
 				})
 			},	
 			loadSwiper(){
@@ -217,7 +232,9 @@
 			tabChange(e){
 				this.page = 1;
 				this.dataList = [];
+				this.status = 'loadmore';
 				that.current = e.index;
+				this.isLoading = true;
 				that.loadData();
 			},
 			toDetail(id,age){
@@ -240,16 +257,10 @@
 			},
 			//   上拉加载
 			scrolltolower(){
-				if (this.page == this.allPages) {
-					this.status = 'noMore'
-					return
-				} else{
-					this.page = this.page + 1;
-					this.status = 'loading';
-					setTimeout(() => {
-						this.loadData();
-					}, 1000)
-				}
+				if(this.status == 'noMore') return
+				if(this.isLoading) return
+				this.page ++;
+				this.loadData();
 			},
 			previewImage(e){
 				uni.previewImage({

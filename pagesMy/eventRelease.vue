@@ -22,12 +22,20 @@
 				<u-icon slot="right" name="arrow-right"></u-icon>
 			</u-form-item>
 			<u-form-item label="非会员价" labelWidth="150" prop="price" borderBottom>
-				<u--input v-model="form.price" border="none" inputAlign="right" placeholder="请输入非会员价"></u--input>
+				<u--input v-model="form.price" type="number" border="none" inputAlign="right" placeholder="请输入非会员价"></u--input>
 				<view class="margin-l" slot="right">元</view>
 			</u-form-item>
 			<u-form-item label="会员价" labelWidth="150" prop="vipPrice" borderBottom>
-				<u--input v-model="form.vipPrice" border="none" inputAlign="right" placeholder="请输入会员价"></u--input>
+				<u--input v-model="form.vipPrice" type="number" border="none" inputAlign="right" placeholder="请输入会员价"></u--input>
 				<view class="margin-l" slot="right">元</view>
+			</u-form-item>
+			<u-form-item label="男生人数上限" labelWidth="200" prop="headcountBoy" borderBottom>
+				<u--input v-model="form.headcountBoy" type="number" border="none" inputAlign="right" placeholder="请输入上限人数"></u--input>
+				<view class="margin-l" slot="right">人</view>
+			</u-form-item>
+			<u-form-item label="女生人数上限" labelWidth="200" prop="headcountGirl" borderBottom>
+				<u--input v-model="form.headcountGirl" type="number" border="none" inputAlign="right" placeholder="请输入上限人数"></u--input>
+				<view class="margin-l" slot="right">人</view>
 			</u-form-item>
 			<u-form-item label="活动简介" labelWidth="150" prop="briefIntroduction" labelPosition="top" borderBottom>
 				<u--textarea
@@ -91,6 +99,18 @@
 						type: 'string',
 					    required: true,
 						message: '请填写会员价',
+						trigger: "change"
+					}],
+					'headcountBoy': [{
+						type: 'string',
+					    required: true,
+						message: '请填写上限人数',
+						trigger: "change"
+					}],
+					'headcountGirl': [{
+						type: 'string',
+					    required: true,
+						message: '请填写上限人数',
 						trigger: "change"
 					}],
 					'briefIntroduction': [{

@@ -31,19 +31,19 @@
 				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
 				<u-button type="primary" color="#211C22" text="加入俱乐部" @click="toClub()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 0 && vipTime == 0 && current == 0">
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime == 0 && current == 0 && (sex == 1 && allBoycount < info.headcountBoy) || (sex == 2 && allGirlcount < info.headcountGirl)">
 				<view class="btn-money">非会员价¥{{info.price}}</view>
 				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
 			</view>
-			<view style="position: relative;" v-if="info.registration == 0 && vipTime != 0 && current == 0">
+			<view style="position: relative;" v-if="info.registration == 0 && vipTime != 0 && current == 0 && (sex == 1 && allBoycount < info.headcountBoy) || (sex == 2 && allGirlcount < info.headcountGirl)">
 				<view class="btn-money">会员价¥{{info.vipPrice}}</view>
 				<u-button type="default" text="立即报名" @click="signUp()"></u-button>
 			</view>
 			<view style="position: relative;" v-if="info.registration == 1 && current == 0">
 				<u-button type="primary" color="#211C22" disabled text="已报名"></u-button>
 			</view>
-			<view style="position: relative;" v-if="current == 1">
-				<u-button type="primary" color="#211C22" disabled text="活动已截止"></u-button>
+			<view style="position: relative;" v-if="current == 1 || (sex == 1 && allBoycount == info.headcountBoy) || (sex == 2 && allGirlcount == info.headcountGirl)">
+				<u-button type="primary" color="#211C22" disabled text="报名已截止"></u-button>
 			</view>
 		</view>
 	</view>
@@ -58,6 +58,9 @@
 				id: '',
 				current: '',
 				vipTime: '',
+				allBoycount: '',
+				allGirlcount: '',
+				sex: '',
 				info:{},
 				orderObj:{}
 			}
@@ -68,6 +71,7 @@
 		},
 		onShow() {
 			this.vipTime = uni.getStorageSync('viptime');
+			this.sex = uni.getStorageSync('userInfo').sex;
 			this.loadData(this.id);
 		},
 		methods:{
@@ -75,6 +79,8 @@
 				getSquareDetails(id).then(res => {
 					this.info = res.data;
 					this.info.people = "男生"+ (this.info.defaultBoy + this.info.actualEnrollmentBoy) + "人 " + "女生" + (this.info.defaultGirl + this.info.actualEnrollmentGirl) + "人";
+					this.allBoycount = this.info.defaultBoy + this.info.actualEnrollmentBoy;
+					this.allGirlcount = this.info.defaultGirl + this.info.actualEnrollmentGirl;
 				})
 			},
 			toClub(){
@@ -113,7 +119,9 @@
 							uni.$u.toast('支付成功');
 						},
 						fail(err) {
-							uni.$u.toast('支付失败');
+							if(res.result){
+								uni.$u.toast(res.result);
+							}
 						}
 					})
 				})

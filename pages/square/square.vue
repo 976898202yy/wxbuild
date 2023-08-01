@@ -33,7 +33,7 @@
 			</scroll-view>
 		</view>
 		<view v-if="current == 1">
-			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 93vh">
+			<scroll-view v-if="squareList.length > 0" scroll-y @scrolltolower="scrolltolower" style="height: 92vh">
 				<view class="box">
 					<view class="box-item" v-for="(item,i) in squareList" :key="i" @click="toDetail(item.id, current)">
 						<image :src="item.activityImagesList[0]" mode="aspectFill"></image>
@@ -54,7 +54,7 @@
 			</scroll-view>
 		</view>
 		<view v-if="squareList.length == 0" class="no-data">
-			<u-empty mode="data" icon="http://cdn.uviewui.com/uview/empty/data.png"></u-empty>
+			<u-empty text="正在加载中..."></u-empty>
 		</view>
 		<view>
 			<u-modal :show="show" :closeOnClickOverlay="true" showCancelButton content="您尚未完善个人信息,请轻触'立即完善'开始提交信息." confirmText="立即完善" cancelText="稍后完善" confirmColor="#EFC439" @cancel="() => show = false" @confirm="confirm"></u-modal>
@@ -70,7 +70,6 @@
 			return{
 				page: 1,
 				size: 6,
-				allPages: '',
 				tabs:[
 					{
 						name: '进行中',
@@ -81,6 +80,7 @@
 				current: 0,
 				squareList:[],
 				status: 'loadmore',
+				isLoading: false,
 				examine: '',
 				show: false,
 				showResult: false
@@ -88,6 +88,7 @@
 		},
 		onShow() {
 			this.loadExamine();
+			this.isLoading = true;
 		},
 		mounted(){
 			this.squareList = [];
@@ -98,8 +99,9 @@
 				this.current = e.index;
 				this.page = 1;
 				this.squareList = [];
+				this.status = 'loadmore';
+				this.isLoading = true;
 				this.loadData();
-				this.loadExamine();
 			},
 			toDetail(id, current){
 				if(this.examine == 1){
@@ -120,24 +122,29 @@
 				})
 			},
 			loadData(){
+				this.isLoading = true;
+				this.status = 'loadmore';
 				let data = {
 					activityType: this.current + 1,
 					pageNum: this.page,
 					pageSize: this.size
 				}
 				getSquareList(data).then(res => {
-					if(res.rows.length > 0){
-						for (let i = 0; i < res.rows.length; i++) {
-							this.squareList.push(res.rows[i])
+					setTimeout(() => {
+						if(res.rows.length > 0){
+							for (let i = 0; i < res.rows.length; i++) {
+								this.squareList.push(res.rows[i])
+							}
+							if(this.page * this.size >= res.total){
+								this.status = 'noMore'
+							}else{
+								this.status = 'loadmore'
+							}
+							this.isLoading = false;
+						}else{
+							this.squareList = [];
 						}
-						if(this.squareList.length > 0){
-							this.allPages = res.totalNum;
-						}else {
-							this.status = 'noMore'
-						}
-					}else{
-						this.squareList = []
-					}
+					}, 1000)
 				})
 			},
 			loadExamine(){
@@ -147,16 +154,10 @@
 			},
 			//   上拉加载	
 			scrolltolower(){
-				if (this.page == this.allPages) {
-					this.status = 'noMore'
-					return
-				} else{
-					this.page = this.page + 1;
-					this.status = 'loading';
-					setTimeout(() => {
-						this.loadData();
-					}, 1000)
-				}
+				if(this.status == 'noMore') return
+				if(this.isLoading) return
+				this.page ++;
+				this.loadData();
 			}
 		}
 	}

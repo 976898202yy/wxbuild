@@ -29,64 +29,64 @@
 				<u-form-item label="出生年月" labelWidth="200">
 					<u--input v-model="form.birthDate" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="出生地" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="出生地" labelWidth="200">
 					<u--input v-model="form.birthplace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="户籍地" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="户籍地" labelWidth="200">
 					<u--input v-model="form.domicilePlace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
 				<u-form-item label="工作地" labelWidth="200">
 					<u--input v-model="form.workplace" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="毕业学校" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="毕业学校" labelWidth="200">
 					<u--input v-model="form.graduationSchool" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="学历" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="学历" labelWidth="200">
 					<u--input v-model="form.education" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="行业" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="行业" labelWidth="200">
 					<u--input v-model="form.professial" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="平均月薪" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="平均月薪" labelWidth="200">
 					<u--input v-model="form.monthlyPay" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
 				<u-form-item label="未婚/离异" labelWidth="200">
 					<u--input v-model="form.maritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>	
 				</u-form-item>
-				<u-form-item label="有无子女" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="有无子女" labelWidth="200">
 					<u--input v-model="form.childrenNum" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="房产情况" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="房产情况" labelWidth="200">
 					<u--input v-model="form.propertypermits" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="兴趣爱好" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="兴趣爱好" labelWidth="200">
 					<u--textarea
 						v-model="form.interests"
 						disabled
 						autoHeight
 					></u--textarea>
 				</u-form-item>
-				<u-form-item label="个人介绍" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="个人介绍" labelWidth="200">
 					<u--textarea
 						v-model="form.seltIntroduction"
 						disabled
 						autoHeight
 					></u--textarea>
 				</u-form-item>
-				<view style="margin: 14px 0;font-size: 32rpx;">择偶要求</view>
-				<u-form-item label="年龄" labelWidth="200">
+				<view v-if="examine == 1" style="margin: 14px 0;font-size: 32rpx;">择偶要求</view>
+				<u-form-item v-if="examine == 1" label="年龄" labelWidth="200">
 					<u--input v-model="form.ageRadius" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="身高" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="身高" labelWidth="200">
 					<u--input v-model="form.heightRadius" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="婚姻状况" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="婚姻状况" labelWidth="200">
 					<u--input v-model="form.mateMaritalStatus" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="学历" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="学历" labelWidth="200">
 					<u--input v-model="form.mateEducation" border="none" disabled disabledColor="#FFFFFF" inputAlign="right"></u--input>
 				</u-form-item>
-				<u-form-item label="其他要求" labelWidth="200">
+				<u-form-item v-if="examine == 1" label="其他要求" labelWidth="200">
 					<u--textarea
 						v-model="form.mateCondition"
 						disabled
@@ -94,24 +94,34 @@
 					></u--textarea>
 				</u-form-item>
 			</u-form>
+			<view class="btn-box">
+				<view v-if="examine == 2" class="lock-btn" @click="confirm">立即解锁</view>
+				<view v-if="examine == 2" class="lock-text">完成实名认证即可解锁全部资料</view>
+				<view v-if="examine == 0" class="lock-text">个人信息审批中，请耐心等待</view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { getInfo } from '@/api/admin/index'
+	import { getInfoExamine } from '@/api/square/form.js'
 	export default{
 		data(){
 			return{
 				id: '',
 				age: '',
 				fileList: [],
-				form:{}
+				form:{},
+				examine: ''
 			}
 		},
 		onLoad(option) {
 			this.id = option.id;
 			this.age = option.age;
+		},
+		onShow() {
+			this.loadExamine();
 		},
 		mounted() {
 			this.loadData(this.id);
@@ -134,7 +144,17 @@
 						})
 					}
 				})
-			}
+			},
+			loadExamine(){
+				getInfoExamine().then(res => {
+					this.examine = res.msg;
+				})
+			},
+			confirm(){
+				uni.navigateTo({
+					url: '/pagesSquare/form'
+				})
+			},
 		}
 	}
 </script>
@@ -155,6 +175,27 @@
 			border-radius: 50%;
 			margin-right: 20px;
 		}
+	}
+	.btn-box{
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		margin: 20px auto;
+	}
+	.lock-btn{
+		border: 1px solid #FEC300;
+		font-size: 28rpx;
+		width: 95px;
+		text-align: center;
+		border-radius: 14px;
+		color: #FEC300;
+		line-height: 2.2;
+	}
+	.lock-text{
+		color: #999;
+		font-size: 30rpx;
+		margin-top: 10px;
 	}
 	.u-upload__deletable{
 		z-index: -1 !important;
